@@ -4,8 +4,8 @@
     "pages/from/from",
     "pages/demo/demo",
     "pages/logs/logs",
-    "pages/input/input"
-    
+    "pages/input/input",
+    "pages/eqdetail/eqdetail"
   ],
   "window": {
     "backgroundTextStyle": "light",
