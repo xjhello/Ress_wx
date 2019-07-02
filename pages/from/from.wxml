@@ -1,0 +1,39 @@
+<l-tabs bind:linchange="changeTabs">
+
+  <l-tabpanel tab="设备列表" key="four" slot="four">
+    <view class="tab-content">
+    <view>
+    <text class="uname">用户名:{{uname}}</text>
+    </view>
+    <text>设备清单:</text>
+      <block wx:for="{{eqList}}" wx:item="item">
+        <view>
+        <text>{{item}}</text> <button>查看详情</button>
+        </view>
+      </block>
+    
+    </view>
+  </l-tabpanel>
+  <l-tabpanel tab="数据展示" key="one" slot="one">
+    <view class="tab-content">
+      <block wx:for="{{mydata['data']}}" wx:for-item="item">
+        <text>
+            设备id:{{item['id']}},
+            状态码:{{item['code']}},
+            设备名称:{{item['name']}}
+            </text>
+      </block>
+    </view>
+  </l-tabpanel>
+
+  <l-tabpanel tab="地图" key="two" slot="two">
+    <view class="tab-content">
+      <map id="map" longitude="113.324520" latitude="23.099994" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 300px;"></map>
+    </view>
+  </l-tabpanel>
+
+  <l-tabpanel tab="接口" key="three" slot="three">
+    <view class="tab-content">接口</view>
+  </l-tabpanel>
+
+</l-tabs>

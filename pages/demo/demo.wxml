@@ -1,0 +1,19 @@
+<view>
+  <van-cell-group>
+  <van-field
+    value="{{ username }}"
+    label="用户名"
+    placeholder="请输入用户名"
+    error
+  />
+  <van-field
+    value="{{ phone }}"
+    label="手机号"
+    placeholder="请输入手机号
+    border="{{ false }}"
+  />
+</van-cell-group>
+</view>
+<view>
+  <van-button type="primary">登录</van-button>
+</view>
