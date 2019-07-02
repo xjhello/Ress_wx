@@ -1,2 +1,4 @@
-<!--pages/eqdetail/eqdetail.wxml-->
+
+<block>
 <text>pages/eqdetail/eqdetail.wxml</text>
+</block>

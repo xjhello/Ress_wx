@@ -8,7 +8,8 @@
     <text>设备清单:</text>
       <block wx:for="{{eqList}}" wx:item="item">
         <view>
-        <text>{{item}}</text> <button>查看详情</button>
+        <text>{{item}}</text> 
+        <button bindtap="getEqDetail" eqname="{{item}}">查看详情</button>
         </view>
       </block>
     

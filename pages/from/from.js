@@ -34,10 +34,10 @@ Page({
     var that = this;
     var urls = ''
     console.log('!!!!!!!!!!:' + uid)
-    urls = 'http://192.168.1.104:3111/api/userDevice?username=' + uid
+    urls = 'http://192.168.1.105:3111/api/userDevice?username=' + uid
     console.log(urls)
     wx.request({
-      url: 'http://192.168.1.104:3111/api/userDevice?username=' + uid,
+      url: 'http://192.168.1.105:3111/api/userDevice?username=' + uid,
       method: 'GET',
       header: {
         'content-type': 'application/json' // 默认值
@@ -53,11 +53,12 @@ Page({
   },
 
 
-// 获取详细设备信息
+// 点击获取详细设备信息
 getEqDetail:function(e){
-    wx.navigateTo({
-      url: '',
-    })
+  console.log(e.currentTarget.eqname)
+    // wx.navigateTo({
+    //   url: '../eqdetail/eqdetail?eqname=' + eqname,
+    // })
 },
 
 onLoad: function (options) {
