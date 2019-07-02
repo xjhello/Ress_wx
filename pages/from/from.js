@@ -46,14 +46,21 @@ Page({
         console.log(res.data)
         that.setData({
           eqList: res.data['data']
-        })
+        } )
       }
     })
     
   },
 
 
-  onLoad: function (options) {
+// 获取详细设备信息
+getEqDetail:function(e){
+    wx.navigateTo({
+      url: '',
+    })
+},
+
+onLoad: function (options) {
     var uid = options.id
     console.log('uname!!!!!!!!!!!!!:' + uid)
     this.setData({
