@@ -1,22 +1,43 @@
-<l-tabs bind:linchange="changeTabs">
-
-  <l-tabpanel tab="设备列表" key="four" slot="four">
-    <view class="tab-content">
-    <view>
-    <text class="uname">用户名:{{uname}}</text>
-    </view>
-    <text>设备清单:</text>
-      <block wx:for="{{eqList}}" wx:item="item">
-        <view>
-        <text>{{item}}</text> 
-        <button bindtap="getEqDetail" eqname="{{item}}">查看详情</button>
+<!-- <view id="api_title">微信小程序API</view> -->
+<!--获取网络类型API-->
+    <view class="network_info_body">
+        <view class="network_info_area">
+            <view class="network_info_title">用户名</view>
+            <!-- <block wx:if="{{ hasNetworkType == false }}">
+                <text class="network_info_prompt">未获取</text>
+                <text class="network_info_prompt">点击获取按钮可获取网络状态</text>
+            </block> -->
+            <block>
+                <text class="info_network_type">{{uname}}</text>
+            <!-- <block wx:if="{{ hasNetworkType == true }}"> -->
+                <!-- <text class="info_network_type">{{ networkType }}</text> -->
+            </block>
         </view>
-      </block>
-    
+        <view class="network_info_btn">
+            <!-- <button size="mini" type="primary" bindtap="getEqDetail" id="1111111111111">获取详情</button>
+            <button size="mini" type="warn" plain bindtap="clear">清空</button> -->
+        </view>
     </view>
-  </l-tabpanel>
-  <l-tabpanel tab="数据展示" key="one" slot="one">
-    <view class="tab-content">
+
+    <view id="api_title">设备列表</view>
+<!--获取系统信息API-->
+    <view class="system_info_body">
+        <view class="system_info_area">
+          <block wx:for="{{eqList}}">
+          <view class="system_info_single">
+                <text class="system_info_title">{{item}}</text>
+                <!-- <button bindtap="getEqDetail" id="{{item}}">获取详情</button> -->
+                <button size="mini" type="primary" bindtap="getEqDetail" id="{{item}}">获取详情</button>
+                <!-- <input class="system_info_value" disabled="{{ true }}" type="text" placeholder="未获取" value="{{ systemInfo.model }}"/> -->
+            </view>   
+          </block>         
+        </view>
+        <view class="system_info_btn">
+            <button type="primary" plain bindtap="enableEquipment">激活更多设备</button>
+        </view>
+    </view>
+
+  <!-- <view class="tab-content">
       <block wx:for="{{mydata['data']}}" wx:for-item="item">
         <text>
             设备id:{{item['id']}},
@@ -24,17 +45,4 @@
             设备名称:{{item['name']}}
             </text>
       </block>
-    </view>
-  </l-tabpanel>
-
-  <l-tabpanel tab="地图" key="two" slot="two">
-    <view class="tab-content">
-      <map id="map" longitude="113.324520" latitude="23.099994" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 300px;"></map>
-    </view>
-  </l-tabpanel>
-
-  <l-tabpanel tab="接口" key="three" slot="three">
-    <view class="tab-content">接口</view>
-  </l-tabpanel>
-
-</l-tabs>
+    </view> -->

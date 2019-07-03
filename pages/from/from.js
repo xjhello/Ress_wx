@@ -8,7 +8,6 @@ Page({
     eqList:[]
   },
 
-  
   // 获取数据
   getData:function(e){
     var that = this;
@@ -34,10 +33,10 @@ Page({
     var that = this;
     var urls = ''
     console.log('!!!!!!!!!!:' + uid)
-    urls = 'http://192.168.1.105:3111/api/userDevice?username=' + uid
+    urls = 'http://47.100.12.130:3111/api/userDevice?username=' + uid
     console.log(urls)
     wx.request({
-      url: 'http://192.168.1.105:3111/api/userDevice?username=' + uid,
+      url: 'http://47.100.12.130:3111/api/userDevice?username=' + uid,
       method: 'GET',
       header: {
         'content-type': 'application/json' // 默认值
@@ -45,7 +44,7 @@ Page({
       success(res){
         console.log(res.data)
         that.setData({
-          eqList: res.data['data']
+          eqList: res.data.data
         } )
       }
     })
@@ -55,10 +54,19 @@ Page({
 
 // 点击获取详细设备信息
 getEqDetail:function(e){
-  console.log(e.currentTarget.eqname)
-    // wx.navigateTo({
-    //   url: '../eqdetail/eqdetail?eqname=' + eqname,
-    // })
+  var eqname = e.currentTarget.id 
+  console.log(e.currentTarget.id)
+    wx.navigateTo({
+      url: '../eqdetail/eqdetail?eqname=' + eqname,
+    })
+},
+
+// 激活设备
+
+enableEquipment: function(){
+    wx.navigateTo({
+      url: '../enable/enable'
+    })
 },
 
 onLoad: function (options) {

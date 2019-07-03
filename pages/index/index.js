@@ -7,12 +7,17 @@ var CusBase64 = require('base64.js');
 const app = getApp()
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    imgurls:[
+      'https://47.100.12.130/img/banner1.8ae48a2b.jpg',
+      'https://47.100.12.130/img/banner1.8ae48a2b.jpg',
+      'https://47.100.12.130/img/banner1.8ae48a2b.jpg'
+    ]
   },
 
+
+  test:function(){
+    console.log('!!!!!!!!!!!!!!!!')
+  },
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
@@ -22,7 +27,6 @@ Page({
 
   // 用户名检测
   unameTest:function(id){
-    console.log('111111111111111')
     wx.request({
       url: 'http://www.swisys.com.cn:3111/api/ims/getValidateCode', 
       method: 'POST',
@@ -33,7 +37,6 @@ Page({
         'content-type': 'application/x-www-form-urlencoded'
       },
       success(res) {
-        console.log('111111111111111')
         console.log(res.data['salt'])
         return res.data['salt'] 
       }
@@ -60,16 +63,13 @@ Page({
       },
       success(res) {
         console.log('成功得到salt！！！')
-        console.log('salt!!!'+res.data['salt'])
-        salt =  res.data['salt']
-        console.log('salt:' + salt)
+        var salt =  res.data.salt //data为json对象，也可以res.data['salt']
+        // console.log('salt:' + salt)
         var newPwd = pwd + salt
         console.log('newPwd:' + newPwd)
         var newSha512 = hsha512.sha512(newPwd)
         console.log('newSha512:' + newSha512)
         var newBase64 = CusBase64.CusBASE64.encoder(newSha512);
-        // const arrayBuffer = new Uint8Array([newSha512])
-        // const newBase64 = wx.arrayBufferToBase64(arrayBuffer)
         console.log('newBase64:' + newBase64)
         wx.request({
           url: 'http://47.100.12.130:3111/api/ims/checkPassword',

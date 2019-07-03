@@ -1,17 +1,45 @@
 {
   "pages": [
+    "pages/demo/demo",
     "pages/index/index",
     "pages/from/from",
-    "pages/demo/demo",
     "pages/logs/logs",
     "pages/input/input",
-    "pages/eqdetail/eqdetail"
+    "pages/eqdetail/eqdetail",
+    "pages/enable/enable"
   ],
   "window": {
+    "backgroundColor": "#006df0",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#1e90ff",
+    "navigationBarTitleText": "上海荣瑟电子",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#006df0",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/icon_CSR.png",
+        "selectedIconPath": "image/icon_CSR_HL.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/icon_CWS.png",
+        "selectedIconPath": "image/icon_CWS_HL.png",
+        "text": "产品"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/icon_settings.png",
+        "selectedIconPath": "image/icon_settings_HL.png",
+        "text": "关于我们"
+      }
+    ]
   },
   "sitemapLocation": "sitemap.json"
 }

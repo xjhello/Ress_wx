@@ -1,22 +1,18 @@
-<!--index.wxml-->
-<view class="container">
-  <!-- <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view> -->
-  
+<import src='post-item/post-item-template.wxml'/>
+<view class='body'>
+    <swiper indicator-dots='true' autoplay="true" interval="5000">
+      <block wx:for="{{imgurls}}">
+          <swiper-item><image src="{{item}}"></image></swiper-item>
+      </block>
+    </swiper>
+</view>
 
-  <form bindsubmit="userLogin">
-  <view>
-  <l-input name='id' label="用户名"  placeholder=""  />
-  <l-input name='pwd' label="密码"  placeholder="请输入寻密码"  />
-  
-  </view>
-  <button form-type='submit'>登录</button>
-  </form>
- 
-  
+<view >
+    <form bindsubmit="userLogin">
+    <view>
+      <l-input name='id' label="用户名："  placeholder="用户名"  />
+      <l-input name='pwd' label="密码："  placeholder="请输入密码"  />
+    </view>
+      <button form-type='submit'>登录</button>
+    </form>
 </view>

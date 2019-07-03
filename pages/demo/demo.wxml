@@ -1,19 +1,34 @@
-<view>
-  <van-cell-group>
-  <van-field
-    value="{{ username }}"
-    label="用户名"
-    placeholder="请输入用户名"
-    error
-  />
-  <van-field
-    value="{{ phone }}"
-    label="手机号"
-    placeholder="请输入手机号
-    border="{{ false }}"
-  />
-</van-cell-group>
+<!--头部 logo部分  -->
+<view class="login-center">
+
+   <!--表单验证部分  -->
+<form bindsubmit="enableEq"  class="form-cen">
+    <view class="from-list">
+      <view class="section">
+        设备号：<input type="number"  name="sbh"  placeholder="设备号"  disabled = "{{btndisabled}}" placeholder-class='placeholders' 
+         value="{{phone}}"   />
+      </view>
+
+      <view class="section">
+        激活码：<input password type="text" name="jhm"   placeholder="激活码"  disabled = "{{btndisabled}}"  placeholder-class='placeholders' />
+      </view>
+
+      <view class="section">
+        用户名：<input type="text" name="yhm"   placeholder="用户名"  disabled = "{{btndisabled}}"  placeholder-class='placeholders' />
+      </view>
+
+      <view class="section">
+        <button size ="default" class="submit-btn"  formType = 'submit' style="background-color:{{loginBtnBgBgColor}}">
+          激活设备
+        </button>
+      </view>
+       <view class="authorization">
+          <button bindtap="clear" formType='reset'> 重新输入</button>
+        </view>
+    </view>
+  </form>
 </view>
-<view>
-  <van-button type="primary">登录</van-button>
-</view>
+
+
+
+

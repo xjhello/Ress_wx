@@ -1,43 +1,12 @@
-// pages/demo/demo.js
+// pages/enable/enable.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
- 
+
   },
-
-
-  enableEq: function(e){
-    var mydata = e.detail.value
-    var eqID = mydata.sbh
-    var Key = mydata.jhm
-    var userName = mydata.yhm
-    console.log(eqID,Key,userName)
-    wx.request({
-      url: 'http://47.100.12.130:3111/api/activateDevice',
-      method: 'POST',
-      data:{
-        deviceid: eqID,
-        key:Key,
-        username:userName
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      success(res){
-       var resu = res.data.result 
-       if (resu == 2){
-         wx.showToast({
-          title: '激活成功！',
-         })
-       }
-      }
-    })
-  },
-
-
 
   /**
    * 生命周期函数--监听页面加载

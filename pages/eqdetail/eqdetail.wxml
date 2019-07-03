@@ -1,4 +1,16 @@
-
-<block>
-<text>pages/eqdetail/eqdetail.wxml</text>
-</block>
+<view class="table">
+  <view class="tr bg-w">
+    <view class="th">参数名称</view>
+    <view class="th">数值</view>
+  </view>
+  <block wx:for="{{eqDataList}}" wx:for-index="key" wx:for-item="value">
+    <view class="tr bg-g">
+      <view class="td">
+        <text class="ctext">{{key}}:</text>
+      </view>
+      <view class="td">
+        <text class="ctext">{{value}}</text>
+      </view>
+    </view>
+  </block>
+</view>
