@@ -9,9 +9,6 @@ Page({
 
   // 获取设备列表
   getDataByName: function (uid) {
-    // wx.showLoading({
-    //   title: '获取中...',
-    // })
     var that = this;
     var urls = ''
     console.log('要查询的用户名称:' + uid)
@@ -43,7 +40,6 @@ getEqDetail:function(e){
 },
 
 // 激活设备
-
 enableEquipment: function(){
     wx.navigateTo({
       url: '../enable/enable'
@@ -52,7 +48,6 @@ enableEquipment: function(){
 
 onLoad: function (options) {
     var uid = options.id
-    console.log('index页面传来的参数' + uid)
     this.setData({
       uname:uid
     })

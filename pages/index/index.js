@@ -1,4 +1,3 @@
-//index.js
 //获取应用实例
 var hsha512  = require('sha512.js')
 var CusBase64 = require('base64.js');
@@ -18,24 +17,6 @@ Page({
       url: '../logs/logs'
     })
   },
-
-  // 用户名检测
-  // unameTest:function(id){
-  //   wx.request({
-  //     url: 'http://www.swisys.com.cn:3111/api/ims/getValidateCode', 
-  //     method: 'POST',
-  //     data: {
-  //       name: id,
-  //     },
-  //     header: {
-  //       'content-type': 'application/x-www-form-urlencoded'
-  //     },
-  //     success(res) {
-  //       console.log('得到的salt值:' + res.data['salt'])
-  //       return res.data['salt'] 
-  //     }
-  //   })
-  // },
 
     // 用户登录
   userLogin: function (e) {
@@ -59,11 +40,8 @@ Page({
         if(res.data.result == 1 ){
           var salt =  res.data.salt //data为json对象，也可以res.data['salt']
           var newPwd = pwd + salt
-          // console.log('newPwd:' + newPwd)
-          var newSha512 = hsha512.sha512(newPwd)
-          // console.log('newSha512:' + newSha512)
+          var newSha512 = hsha512.sha512(newPwd)   
           var newBase64 = CusBase64.CusBASE64.encoder(newSha512);
-          // console.log('newBase64:' + newBase64)
           wx.request({
             url: 'http://47.100.12.130:3111/api/ims/checkPassword',
             method: 'POST',
