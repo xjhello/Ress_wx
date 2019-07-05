@@ -4,37 +4,18 @@ Page({
    */
   data: {
     uname:'',
-    mydata:{},
     eqList:[]
   },
 
-  // 获取数据
-  getData:function(e){
-    var that = this;
-    wx.request({
-      url: 'http://47.100.12.130:3111/api/ims/page?page=5&size=20', //仅为示例，并非真实的接口地址
-      method: 'GET',
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        that.mydata = res.data
-        console.log(that.mydata)
-        that.setData({
-          mydata: res.data
-        })
-      }
-    })
-  },
-
-
-  // 获取数据
+  // 获取设备列表
   getDataByName: function (uid) {
+    // wx.showLoading({
+    //   title: '获取中...',
+    // })
     var that = this;
     var urls = ''
-    console.log('!!!!!!!!!!:' + uid)
+    console.log('要查询的用户名称:' + uid)
     urls = 'http://47.100.12.130:3111/api/userDevice?username=' + uid
-    console.log(urls)
     wx.request({
       url: 'http://47.100.12.130:3111/api/userDevice?username=' + uid,
       method: 'GET',
@@ -42,10 +23,10 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success(res){
-        console.log(res.data)
         that.setData({
-          eqList: res.data.data
-        } )
+          eqList: res.data.data,
+          uname:uid
+        })
       }
     })
     
@@ -55,7 +36,7 @@ Page({
 // 点击获取详细设备信息
 getEqDetail:function(e){
   var eqname = e.currentTarget.id 
-  console.log(e.currentTarget.id)
+  console.log('要查询的设备名称:'+e.currentTarget.id)
     wx.navigateTo({
       url: '../eqdetail/eqdetail?eqname=' + eqname,
     })
@@ -71,12 +52,11 @@ enableEquipment: function(){
 
 onLoad: function (options) {
     var uid = options.id
-    console.log('uname!!!!!!!!!!!!!:' + uid)
+    console.log('index页面传来的参数' + uid)
     this.setData({
       uname:uid
     })
     this.getDataByName(uid)
-    
   },
 
  
@@ -99,9 +79,19 @@ onLoad: function (options) {
 
   },
 
-  
+  // 下拉刷新
   onPullDownRefresh: function () {
-
+    console.log('下拉动作')
+    // 展示下拉动画
+    wx.showNavigationBarLoading()
+    // 隐藏导航栏加载框
+    wx.hideNavigationBarLoading();
+    // 停止下拉动作
+    wx.stopPullDownRefresh();
+    wx.navigateTo({
+      url: 'from?id=' + this.data.uname,
+    })
+ 
   },
 
  

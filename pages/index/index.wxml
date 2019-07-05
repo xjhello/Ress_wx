@@ -9,10 +9,45 @@
 
 <view >
     <form bindsubmit="userLogin">
+    <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">  
+    <view class="page__bd">
+        <view class="weui-cells__title"><text decode="{{true}}">&nbsp;</text></view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">用户名:</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input name='id' class="weui-input" placeholder="请输入用户名"/>
+                </view>
+            </view>
+
+             <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">密码:</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input name='pwd' class="weui-input" placeholder="请输入密码" type='password'/>
+                </view>
+            </view>
+        </view>
+        <!-- <view class="weui-cells__tips">核对清楚</view> -->
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" form-type='submit'>确定</button>
+        </view>
+    </view>
+</view>
+    </form>
+</view>
+
+
+
+<!-- <view >
+    <form bindsubmit="userLogin">
     <view>
       <l-input name='id' label="用户名："  placeholder="用户名"  />
-      <l-input name='pwd' label="密码："  placeholder="请输入密码"  />
+      <l-input name='pwd' label="密码：" type='password' placeholder="请输入密码"  />
     </view>
       <button form-type='submit'>登录</button>
     </form>
-</view>
+</view> -->

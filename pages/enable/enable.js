@@ -1,12 +1,60 @@
-// pages/enable/enable.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+ 
   },
+
+  enableEq: function(e){
+    var mydata = e.detail.value
+    var eqID = mydata.sbh
+    var Key = mydata.jhm
+    var userName = mydata.yhm
+    console.log(eqID,Key,userName)
+    wx.request({
+      url: 'http://47.100.12.130:3111/api/activateDevice',
+      method: 'POST',
+      data:{
+        deviceid: eqID,
+        key:Key,
+        username:userName
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success(res){
+       var resu = res.data.result 
+       if (resu == 2){
+        wx.showToast({
+         title: '该设备被激活！',
+        })
+      }
+      if (resu == 1){
+         wx.showToast({
+          title: '激活成功！',
+         })
+       }
+       if (resu == 0){
+        wx.showModal({
+          title: '提示！',
+          content: '设备激活失败,请检查参数!',
+          showCancel:false,
+          success (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      }
+      }
+    })
+  },
+
+
 
   /**
    * 生命周期函数--监听页面加载

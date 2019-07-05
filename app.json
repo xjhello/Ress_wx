@@ -1,17 +1,17 @@
 {
   "pages": [
-    "pages/demo/demo",
     "pages/index/index",
     "pages/from/from",
-    "pages/logs/logs",
-    "pages/input/input",
+    "pages/demo/demo",
     "pages/eqdetail/eqdetail",
-    "pages/enable/enable"
+    "pages/enable/enable",
+    "pages/product/product",
+    "pages/phone/phone"
   ],
   "window": {
     "backgroundColor": "#006df0",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#1e90ff",
+    "navigationBarBackgroundColor": "#008B8B",
     "navigationBarTitleText": "上海荣瑟电子",
     "navigationBarTextStyle": "white"
   },
@@ -23,20 +23,20 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "image/icon_CSR.png",
-        "selectedIconPath": "image/icon_CSR_HL.png",
+        "iconPath": "image/index.png",
+        "selectedIconPath": "image/index_in.png",
         "text": "首页"
       },
       {
-        "pagePath": "pages/index/index",
-        "iconPath": "image/icon_CWS.png",
-        "selectedIconPath": "image/icon_CWS_HL.png",
+        "pagePath": "pages/product/product",
+        "iconPath": "image/product.png",
+        "selectedIconPath": "image/product_in.png",
         "text": "产品"
       },
       {
-        "pagePath": "pages/index/index",
-        "iconPath": "image/icon_settings.png",
-        "selectedIconPath": "image/icon_settings_HL.png",
+        "pagePath": "pages/phone/phone",
+        "iconPath": "image/tphone.png",
+        "selectedIconPath": "image/tphone_in.png",
         "text": "关于我们"
       }
     ]

@@ -5,7 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
- 
+    tabs: ["选项一", "选项二", "选项三"],
+    activeIndex: 1,
+    sliderOffset: 0,
+    sliderLeft: 0
   },
 
 
@@ -14,6 +17,7 @@ Page({
     var eqID = mydata.sbh
     var Key = mydata.jhm
     var userName = mydata.yhm
+
     console.log(eqID,Key,userName)
     wx.request({
       url: 'http://47.100.12.130:3111/api/activateDevice',
@@ -33,17 +37,22 @@ Page({
           title: '激活成功！',
          })
        }
-      }
+      },
     })
   },
 
-
-
+  tabClick: function (e) {
+    this.setData({
+      sliderOffset: e.currentTarget.offsetLeft,
+      activeIndex: e.currentTarget.id
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this;
+  
   },
 
   /**

@@ -1,3 +1,13 @@
+.weui-tab__panel {
+  box-sizing:border-box;
+  height:100%;
+  padding-top:0px;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  
+  }
+  
+
 .ctext {
   font-size: 25px;
 }
@@ -31,3 +41,16 @@
     height: 3rem;
     align-items: center;
   }
+
+
+.page,
+.page__bd{
+    height: 100%;
+}
+.page__bd{
+    padding-bottom: 0;
+}
+.weui-tab__content{
+    padding-top: 51px;
+    text-align: center;
+}
