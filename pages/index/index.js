@@ -36,6 +36,14 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
+      fail(res){
+        wx.hideLoading()
+        wx.showToast({
+          title: '服务器错误',
+          icon: 'none',
+          duration: 2000
+        })
+      },
       success(res) {
         if(res.data.result == 1 ){
           var salt =  res.data.salt //data为json对象，也可以res.data['salt']
@@ -51,6 +59,14 @@ Page({
             },
             header: {
               'content-type': 'application/x-www-form-urlencoded'
+            },
+            fail(res){
+              wx.hideLoading()
+              wx.showModal({
+                title: '提示！',
+                content: '密码错误，请重新输入！',
+                showCancel:false,
+              })
             },
             success(res) {
               // 密码检测
