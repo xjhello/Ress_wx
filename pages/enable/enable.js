@@ -14,7 +14,7 @@ Page({
     var userName = mydata.yhm
     console.log(eqID,Key,userName)
     wx.request({
-      url: 'http://47.100.12.130:3111/api/activateDevice',
+      url: 'https://www.swisys.com.cn:8080/api/activateDevice',
       method: 'POST',
       data:{
         deviceid: eqID,

@@ -1,0 +1,43 @@
+<view>
+    <form bindsubmit="userRegister">
+    <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">  
+    <view class="page__bd">
+        <view class="weui-cells__title"><text decode="{{true}}">&nbsp;</text></view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">用户名:</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input name='username' class="weui-input" placeholder="请输入用户名"/>
+                </view>
+            </view>
+
+             <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">密码:</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input name='pwd1' class="weui-input" placeholder="请输入密码" type='password'/>
+                </view>               
+            </view>
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">确认密码:</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input name='pwd2' class="weui-input" placeholder="请再一次输入密码" type='password'/>
+                </view>             
+            </view>
+
+            
+        </view>
+        <!-- <view class="weui-cells__tips">核对清楚</view> -->
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" form-type='submit'>确定注册</button>
+            <!-- <button class="weui-btn" bindtap='register'>注册</button> -->
+        </view>
+    </view>
+</view>
+    </form>
+</view>

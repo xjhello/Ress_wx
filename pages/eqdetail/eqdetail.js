@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
 
   data: {
@@ -9,6 +10,38 @@ Page({
 },
 
 
+httpp:function(){
+  wx.request({
+    url: app.globalData.imsUrl + '/deviceData?devicename=' + eqname,
+    // url: 'https://www.swisys.com.cn:8080/api/ims/deviceData?devicename=' + eqname,
+    method: 'GET',
+    header: {
+      'content-type': 'application/x-www-form-urlencoded' // 默认值
+    },
+    success(res) {
+      if (res.data.result == 1) {
+        // 获取成功
+        // wx.hideLoading()
+        var datalist = res.data.imsLastData
+        that.setData({
+          eqDataList: datalist,
+          eqname: options.eqname
+        });
+        wx.hideNavigationBarLoading();
+        wx.stopPullDownRefresh()
+      } else {
+        // 获取失败
+        wx.hideLoading()
+        wx.showToast({
+          title: '获取失败',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    },
+  })  
+},
+
 // 分类栏切换
 tabClick: function (e) {
   this.setData({
@@ -17,6 +50,14 @@ tabClick: function (e) {
   });
 },
 
+// updata:function(){
+//   wx.hideLoading()
+//   var datalist = res.data.imsLastData
+//   that.setData({
+//     eqDataList: datalist,
+//     eqname: options.eqname
+//   })
+// },
 
   onLoad: function (options) {
     // 要查询的设备名称eqname
@@ -28,13 +69,15 @@ tabClick: function (e) {
     })
     // 请求设备参数
     wx.request({
-      url: 'http://47.100.12.130:3111/api/ims/deviceData?devicename=' + eqname,
+      url: app.globalData.imsUrl + '/ims/deviceData?devicename=' + eqname,
+      // url: 'https://www.swisys.com.cn:8080/api/ims/deviceData?devicename=' + eqname,
       method: 'GET',
       header: {
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       success(res){
         if(res.data.result == 1){
+          // updata();
           // 获取成功
           wx.hideLoading()
           var datalist = res.data.imsLastData
@@ -87,7 +130,9 @@ tabClick: function (e) {
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    // 展示下拉动画
+    wx.showNavigationBarLoading();
+    httpp();
   },
 
   /**

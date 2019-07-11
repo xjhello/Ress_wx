@@ -1,5 +1,9 @@
 //app.js
 App({
+  globalData: {
+    imsUrl: "http://47.100.12.130:3111/api",
+  },
+
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -33,7 +37,5 @@ App({
       }
     })
   },
-  globalData: {
-    userInfo: null
-  }
+ 
 })

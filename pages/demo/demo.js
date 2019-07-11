@@ -5,12 +5,25 @@ Page({
    * 页面的初始数据
    */
   data: {
+    a:0,
     tabs: ["选项一", "选项二", "选项三"],
     activeIndex: 1,
     sliderOffset: 0,
     sliderLeft: 0
   },
 
+  // success: function(){},
+  // success: (res)=>{},
+  test: function(e){
+    for (var i=0;i<10000000;i++){
+      for(var j=0;j<100000;j++){
+
+      }
+      this.setData({
+        a:i
+      })
+    }
+  },
 
   enableEq: function(e){
     var mydata = e.detail.value

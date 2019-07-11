@@ -1,3 +1,4 @@
+var app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -12,14 +13,18 @@ Page({
     var that = this;
     var urls = ''
     console.log('要查询的用户名称:' + uid)
-    urls = 'http://47.100.12.130:3111/api/userDevice?username=' + uid
+    // urls = 'https://www.swisys.com.cn:8080/api/userDevice?username=' + uid
     wx.request({
-      url: 'http://47.100.12.130:3111/api/userDevice?username=' + uid,
+      url: app.globalData.imsUrl + '/userDevice?username=' + uid,
+      // url: 'https://www.swisys.com.cn:8080/api/userDevice?username=' + uid,
       method: 'GET',
       header: {
         'content-type': 'application/json' // 默认值
       },
       success(res){
+        var sss = JSON.stringify(res.data)
+        console.log(Object.prototype.toString.call(res.data))
+        console.log('!!!!!!!!!!!',res.data)
         that.setData({
           eqList: res.data.data,
           uname:uid
@@ -76,6 +81,7 @@ onLoad: function (options) {
 
   // 下拉刷新
   onPullDownRefresh: function () {
+    var that = this
     console.log('下拉动作')
     // 展示下拉动画
     wx.showNavigationBarLoading()
@@ -83,10 +89,10 @@ onLoad: function (options) {
     wx.hideNavigationBarLoading();
     // 停止下拉动作
     wx.stopPullDownRefresh();
-    wx.navigateTo({
-      url: 'from?id=' + this.data.uname,
-    })
- 
+    this.getDataByName(that.uname);
+    // wx.navigateTo({
+    //   url: 'from?id=' + this.data.uname,
+    // })
   },
 
  

@@ -34,6 +34,7 @@
         <!-- <view class="weui-cells__tips">核对清楚</view> -->
         <view class="weui-btn-area">
             <button class="weui-btn" type="primary" form-type='submit'>确定</button>
+            <button class="weui-btn" bindtap='register'>注册</button>
         </view>
     </view>
 </view>
