@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/demo/demo",
+    
     "pages/index/index",
     "pages/from/from",
-    
+    "pages/demo/demo",
     "pages/eqdetail/eqdetail",
     "pages/enable/enable",
     "pages/product/product",

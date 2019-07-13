@@ -45,7 +45,7 @@ Page({
               console.log('222得到的salt值',salt);
               // 注册
               wx.request({
-                url: app.globalData.imsUrl + '/ims/addUser',
+                url: app.globalData.imsUrl + '/addUser',
                 method: 'POST',
                 data: {
                   name: uname,

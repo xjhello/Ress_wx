@@ -32,19 +32,37 @@ Page({
 // --回调获得设备特征值列表--读取低功耗蓝牙设备的特征值的二进制数据值
 
 
+
+onLoad: function () {
+  getBluetoothAdapterState();
+
+},
+
   openBluetoothAdapter() {
     // 初始化蓝牙模块
     wx.openBluetoothAdapter({
       success: (res) => {
+        wx.showToast({
+          title: '蓝牙初始化成功',
+          icon: 'none',
+          duration: 2000
+        })
         console.log('初始化蓝牙模块 success', res)
         this.startBluetoothDevicesDiscovery()
       },
 
       fail: (res) => {
         if (res.errCode === 10001) {
+          wx.showToast({
+            title: '当前蓝牙适配器不可用',
+            icon: 'none',
+            duration: 2000
+          });
           // 监听蓝牙适配器状态变化事件
           wx.onBluetoothAdapterStateChange(function (res) {
-            console.log('onBluetoothAdapterStateChange', res)
+            console.log('监听蓝牙适配器状态变化事件', res)
+            // available 蓝牙适配器是否可用
+            // discovering 蓝牙适配器是否处于搜索状态
             if (res.available) {
               this.startBluetoothDevicesDiscovery()
             }
@@ -57,14 +75,37 @@ Page({
   // 获取本机蓝牙适配器状态
   getBluetoothAdapterState() {
     wx.getBluetoothAdapterState({
+      
       success: (res) => {
-        console.log('getBluetoothAdapterState', res)
-        if (res.discovering) {
+        wx.showToast({
+          title: '本机蓝牙适配器已经打开',
+          icon: 'none',
+          duration: 2000
+        });
+        console.log('本机蓝牙适配器已经打开', res)
+        // discovering: 是否正在搜索设备
+        // available: 蓝牙适配器是否可用
+        if (res.discovering) { 
+          // 正在搜索设备
+          // 继续监听寻找到新设备的事件
           this.onBluetoothDeviceFound()
         } else if (res.available) {
+          // 蓝牙适配器可用
+          // 开始蓝牙搜索
           this.startBluetoothDevicesDiscovery()
         }
+      },
+
+      // 本机蓝牙状态失败
+      fail: (res) => {
+        wx.showToast({
+          title: '本机蓝牙未打开！',
+          icon: 'none',
+          duration: 2000
+        });
+        console.log('本机蓝牙未打开！', res);
       }
+      
     })
   },
 
@@ -84,6 +125,17 @@ Page({
         console.log('开始搜寻附近的蓝牙外围设备 success', res)
         // 监听寻找到新设备的事件
         this.onBluetoothDeviceFound()
+      },
+
+
+
+      fail: () =>{
+        wx.showToast({
+          title: '没有找到指定设备',
+          icon: 'none',
+          duration: 2000
+        });
+
       },
     })
   },
@@ -125,12 +177,13 @@ Page({
     const name = ds.name  
     wx.createBLEConnection({
       deviceId,   // 用于区分设备的 id
+
       success: (res) => {
         this.setData({
           connected: true,
           name,
           deviceId,
-        })
+        }),
         // 获取蓝牙设备所有服务(service)。
         this.getBLEDeviceServices(deviceId)
       }
@@ -138,6 +191,16 @@ Page({
     // 停止搜索
     this.stopBluetoothDevicesDiscovery()
   },
+
+  // 失败
+  fail: () => {
+    wx.showToast({
+      title: '蓝牙连接失败！！',
+      icon: 'none',
+      duration: 2000
+    });
+  },
+
 
   // 关闭蓝牙连接
   closeBLEConnection() {
@@ -163,7 +226,17 @@ Page({
             return
           }
         }
-      }
+      },
+
+     // 失败
+     fail: (res) =>{
+      wx.showToast({
+        title: '获取蓝牙设备所有服务失败',
+        icon: 'none',
+        duration: 2000
+      });
+     },
+
     })
   },
 
@@ -183,7 +256,15 @@ Page({
               characteristicId: item.uuid,  //蓝牙特征值的 uuid
               // 读取回调函数 
               success (res) {
-                console.log('readBLECharacteristicValue:', res.errCode)
+                console.log('读取蓝牙服务特征值成功！:', res.errCode)
+              },
+
+              fail (){
+                wx.showToast({
+                  title: '读取蓝牙服务特征值失败',
+                  icon: 'none',
+                  duration: 2000
+                });
               }
             })
           }
@@ -209,7 +290,7 @@ Page({
         }
       },
       fail(res) {
-        console.error('getBLEDeviceCharacteristics', res)
+        console.error('获取回调获得设备特征值列表失败', res)
       }
     })
 

@@ -1,7 +1,7 @@
 //app.js
 App({
   globalData: {
-    imsUrl: "http://47.100.12.130:3111/api",
+    imsUrl: "https://www.swisys.com.cn:8080/api",
   },
 
   onLaunch: function () {
