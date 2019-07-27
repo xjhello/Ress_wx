@@ -13,10 +13,8 @@ Page({
     var that = this;
     var urls = ''
     console.log('要查询的用户名称:' + uid)
-    // urls = 'https://www.swisys.com.cn:8080/api/userDevice?username=' + uid
     wx.request({
       url: app.globalData.imsUrl + '/userDevice?username=' + uid,
-      // url: 'https://www.swisys.com.cn:8080/api/userDevice?username=' + uid,
       method: 'GET',
       header: {
         'content-type': 'application/json' // 默认值
@@ -90,9 +88,7 @@ onLoad: function (options) {
     // 停止下拉动作
     wx.stopPullDownRefresh();
     this.getDataByName(that.uname);
-    // wx.navigateTo({
-    //   url: 'from?id=' + this.data.uname,
-    // })
+
   },
 
  

@@ -9,7 +9,7 @@ page{
   padding: 40px;
 }
 .page__bd {
-  padding-bottom: 40px;
+  padding-bottom: 0px;
 }
 .page__bd_spacing {
   padding-left: 15px;
@@ -33,14 +33,4 @@ page{
   text-align: left;
   font-size: 14px;
 }
-
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
-} 
 

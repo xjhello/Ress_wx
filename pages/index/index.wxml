@@ -1,11 +1,11 @@
-<import src='post-item/post-item-template.wxml'/>
+<!-- <import src='post-item/post-item-template.wxml'/>
 <view class='body'>
     <swiper indicator-dots='true' autoplay="true" interval="5000">
       <block wx:for="{{imgurls}}">
           <swiper-item><image src="{{item}}"></image></swiper-item>
       </block>
     </swiper>
-</view>
+</view> -->
 
 <view >
     <form bindsubmit="userLogin">

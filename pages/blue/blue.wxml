@@ -7,11 +7,22 @@ module.exports.len = function(arr) {
   return arr.length
 }
 </wxs>
-<button bindtap="openBluetoothAdapter">开始扫描</button>
-<button bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
-<button bindtap="closeBluetoothAdapter">结束流程</button>
 
-<view class="devices_summary">已发现 {{devices.length}} 个外围设备：</view>
+<view class="page">
+<view style="height:30rpx;">
+</view>
+  <view class="page__bd page__bd_spacing">
+          <button class="weui-btn" type="primary" bindtap="openBluetoothAdapter">开始蓝牙扫描</button>
+          <button class="weui-btn" type="warn" bindtap="stopBluetoothDevicesDiscovery">停止蓝牙扫描</button>
+          <button class="weui-btn" type="primary"  bindtap="closeBluetoothAdapter">关闭蓝牙</button>
+  </view>
+</view>
+
+<!-- <button bindtap="openBluetoothAdapter">开始扫描</button>
+<button bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
+<button bindtap="closeBluetoothAdapter">结束流程</button> -->
+
+<view class="devices_summary">已发现 {{devices.length}} 个蓝牙设备：</view>
 <scroll-view class="device_list" scroll-y scroll-with-animation>
   <view wx:for="{{devices}}" wx:key="index"
    data-device-id="{{item.deviceId}}"
@@ -34,8 +45,10 @@ module.exports.len = function(arr) {
     <button size="mini" bindtap="closeBLEConnection">断开连接</button>
     </view>
   </view>
-  <view wx:for="{{chs}}" wx:key="index" style="font-size: 12px; margin-top: 10px;">
-    <view>特性UUID: {{item.uuid}}</view>
-    <view>特性值: {{item.value}}</view>
+  
+  <view style="font-size: 12px; margin-top: 10px;">
+    <view>蓝牙16进制数据: {{bluedata.strhexdata}}</view>
+    <view>蓝牙字符串数据: {{bluedata.strdata}}</view>
+    <!-- <view>所有数据: {{dataList}}</view> -->
   </view>
 </view>

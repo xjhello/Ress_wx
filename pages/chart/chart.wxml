@@ -1,0 +1,12 @@
+<view class="container">
+    <canvas canvas-id="ringCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+    <view>当前速度动态显示</view>
+    <button type="primary" bindtap="updateData" style="margin-top:30rpx">更新</button>
+</view>
+
+<c-abc val="{{number}}" number="{{number}}" bind:myevent="onGetCode"></c-abc>
+
+<!-- 
+<pract modal-hidden="{{show_none}}"
+ bind:compontpass="compontpass" modal-d="1" 
+ id="start_id" modal-msg="{{modalMsg}}" /> -->

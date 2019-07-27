@@ -1,7 +1,8 @@
 {
   "pages": [
-    
     "pages/index/index",
+    "pages/mytest/index",
+    "pages/test/index",
     "pages/from/from",
     "pages/demo/demo",
     "pages/eqdetail/eqdetail",
@@ -10,7 +11,10 @@
     "pages/phone/phone",
     "pages/register/register",
     "pages/bluetooth/bluetooth",
-    "pages/blue/blue"
+    "pages/blue/blue",
+    "pages/user/user",
+    "pages/chart/chart",
+    "pages/blueconnect/blueconnect"
   ],
   "window": {
     "backgroundColor": "#006df0",
@@ -32,16 +36,22 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/bluetooth/bluetooth",
-        "iconPath": "image/product.png",
-        "selectedIconPath": "image/product_in.png",
-        "text": "蓝牙"
+        "pagePath": "pages/user/user",
+        "iconPath": "image/user.png",
+        "selectedIconPath": "image/user_in.png",
+        "text": "个人中心"
       },
       {
         "pagePath": "pages/blue/blue",
-        "iconPath": "image/tphone.png",
-        "selectedIconPath": "image/tphone_in.png",
-        "text": "关于我们"
+        "iconPath": "image/blue.png",
+        "selectedIconPath": "image/blue_in.png",
+        "text": "蓝牙"
+      },
+      {
+        "pagePath": "pages/chart/chart",
+        "iconPath": "image/product.png",
+        "selectedIconPath": "image/product_in.png",
+        "text": "可视化"
       }
     ]
   },

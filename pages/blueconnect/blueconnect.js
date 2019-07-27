@@ -1,5 +1,4 @@
 const app = getApp()
-
 // inArray方法可以检查数组元素的内容，以检查它是否与特定值匹配
 function inArray(arr, key, val) {
   for (let i = 0; i < arr.length; i++) {
@@ -37,7 +36,6 @@ function ab2hex(buffer) {
   return hexArr.join('');
 }
 
-
 // 16进制转化为字符串
 function hexCharCodeToStr(hexCharCodeStr) {
   　　var trimedStr = hexCharCodeStr.trim();
@@ -59,102 +57,38 @@ function hexCharCodeToStr(hexCharCodeStr) {
 
 Page({
   data: {
+    deviceId:'',
+    deviceName:'',
     dataList:[], // 数据列表
     devices: [],
-    connected: false,
+    connected: true,
     chs: [],
-    bluedata:{}  // 蓝牙数据对象
+    bluedata:{},  // 蓝牙数据对象
+    serviceId:'',          // 蓝牙特征值对应服务的 uuid
+    characteristicId:''  // 蓝牙特征值的 uuid
   },
 
-// 初始化蓝牙--开始搜索--监听寻找到新设备的事件--收集蓝牙设备的信息--uid与蓝牙建立连接
-// --获取蓝牙设备所有服务--成功回调得到蓝牙uuid--获取蓝牙设备某个服务中所有特征值
-// --回调获得设备特征值列表--读取低功耗蓝牙设备的特征值的二进制数据值
 
-
-onLoad: function () {
-  // getBluetoothAdapterState();
-
-},
-
-  // 点击事件：初始化蓝牙模块->开始搜索蓝牙并且不断监听，有新的蓝牙出现就更新数据
-  openBluetoothAdapter() {
-    console.log('初始化蓝牙模块')
-    wx.showToast({
-      title: '蓝牙搜索中',
-      icon: 'loading',
-      duration: 2000
-    })
-    wx.openBluetoothAdapter({
-      success: (res) => {
-        // wx.showToast({
-        //   title: '蓝牙初始化成功',
-        //   icon: 'none',
-        //   duration: 2000
-        // })
-        console.log('初始化蓝牙模块 success', res)
-        this.startBluetoothDevicesDiscovery()
-      },
-
-      fail: (res) => {
-        if (res.errCode === 10001) {
-          wx.showToast({
-            title: '当前蓝牙适配器不可用',
-            icon: 'none',
-            duration: 2000
-          });
-          // 监听蓝牙适配器状态变化事件
-          wx.onBluetoothAdapterStateChange(function (res) {
-            console.log('监听蓝牙适配器状态变化事件', res)
-            // available 蓝牙适配器是否可用
-            // discovering 蓝牙适配器是否处于搜索状态
-            if (res.available) {
-              this.startBluetoothDevicesDiscovery()
-            }
-          })
-        }
-      }
-    })
+  onLoad: function (options) {
+      // 接受参数  
+      var deviceid = options.deviceId
+      var name = options.name
+      this.setData({
+        deviceName:name,
+        deviceId:deviceid
+      })
+      console.log('进入连接页面，开始连接...')
+      console.log(this.data.deviceId)
+      console.log(this.data.deviceName)
+      // this.startBluetoothDevicesDiscovery()
+      // this.createBLEConnection(name,deviceid)
+      // this.getBLEDeviceServices(deviceid)
+      this.getBLEDeviceServices(deviceid)
   },
 
-  // 获取本机蓝牙适配器状态
-  getBluetoothAdapterState() {
-    wx.getBluetoothAdapterState({
-      
-      success: (res) => {
-        wx.showToast({
-          title: '本机蓝牙适配器已经打开',
-          icon: 'none',
-          duration: 2000
-        });
-        console.log('本机蓝牙适配器已经打开', res)
-        // discovering: 是否正在搜索设备
-        // available: 蓝牙适配器是否可用
-        if (res.discovering) { 
-          // 正在搜索设备
-          // 继续监听寻找到新设备的事件
-          this.onBluetoothDeviceFound()
-        } else if (res.available) {
-          // 蓝牙适配器可用
-          // 开始蓝牙搜索
-          this.startBluetoothDevicesDiscovery()
-        }
-      },
-
-      // 本机蓝牙状态失败
-      fail: (res) => {
-        wx.showToast({
-          title: '本机蓝牙未打开！',
-          icon: 'none',
-          duration: 2000
-        });
-        console.log('本机蓝牙未打开！', res);
-      }
-      
-    })
-  },
-
-  //  开始蓝牙搜索
-  startBluetoothDevicesDiscovery() {
+  
+   //  开始蓝牙搜索
+   startBluetoothDevicesDiscovery() {
     // 默认为flase
     if (this._discoveryStarted) {
       return
@@ -182,11 +116,6 @@ onLoad: function () {
     })
   },
 
-  // 停止搜寻附近的蓝牙外围设备
-  stopBluetoothDevicesDiscovery() {
-    wx.stopBluetoothDevicesDiscovery()
-  },
-
   // 监听寻找到新设备的事件
   onBluetoothDeviceFound() {
     wx.onBluetoothDeviceFound((res) => {
@@ -212,43 +141,35 @@ onLoad: function () {
     })
   },
 
+
+  // 停止搜寻附近的蓝牙外围设备
+  stopBluetoothDevicesDiscovery() {
+    wx.stopBluetoothDevicesDiscovery()
+  },
+
+
   // 点击事件：连接低功耗蓝牙设备
-  createBLEConnection(e) {
+  createBLEConnection(deviceid,devicename) {
+    var that = this 
     console.log('开始连接蓝牙')
-    const ds = e.currentTarget.dataset
-    const deviceId = ds.deviceId  // 用于区分设备的 id
-    const name = ds.name
-    wx.showModal({
-      title: '提示',
-      content: '是否连接该设备?',
-      success (res) {
-        if (res.confirm) {
-          // 跳转到连接页面
-          console.log('用户点击确定')
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    })  
-    console.log('数据参数：', ds,deviceId,name)
+    // var deviceId = deviceid  // 用于区分蓝牙设备的id
+    // var name = name          // 蓝牙名称
+    console.log('数据参数：',deviceid,devicename)
     wx.createBLEConnection({
-      deviceId,   // 用于区分设备的 id
+      deviceId: deviceid,   // 用于区分设备的 id
       success: (res) => {
         console.log('蓝牙连接成功！！！')
         this.setData({
-          // connected: true,
-          name,
-          deviceId,
+          connected: true,
+          name:devicename,
+          deviceId:deviceid,
         }),
         // 获取蓝牙设备所有服务(service)。
-        wx.navigateTo({
-          url: '../blueconnect/blueconnect?deviceId='+deviceId+'&name='+name,
-        })
-        // this.getBLEDeviceServices(deviceId)
+        this.getBLEDeviceServices(deviceId)
       },
        // 失败
-      fail: () => {
-        console.log('蓝牙连接失败！！')
+      fail: (res) => {
+        console.log(res)
         wx.showToast({
           title: '蓝牙连接失败！！',
           icon: 'none',
@@ -260,7 +181,7 @@ onLoad: function () {
     this.stopBluetoothDevicesDiscovery()
   },
 
-  // 关闭蓝牙连接
+  // 断开蓝牙连接
   closeBLEConnection() {
     wx.closeBLEConnection({
       deviceId: this.data.deviceId
@@ -301,7 +222,7 @@ onLoad: function () {
 
   //  获取蓝牙设备某个服务中所有特征值(characteristic)
   getBLEDeviceCharacteristics(deviceId, serviceId) {
-    var _this = this;
+    var that = this;
     var datalist = [] // 当前服务得到的数据列表
     console.log('获取蓝牙设备某个服务中所有特征值')
     wx.getBLEDeviceCharacteristics({
@@ -331,27 +252,38 @@ onLoad: function () {
               }
             })
           }
-          if (item.properties.write || item.properties.notify  || item.properties.indicate) {   // properties该特征值支持的操作类型
+          if (item.properties.write || item.properties.notify) {   // properties该特征值支持的操作类型
             console.log('该蓝牙服务为Write notify状态!')
             this.setData({ 
               canWrite: true
             }) 
-            this._deviceId = deviceId
-            this._serviceId = serviceId
-            this._characteristicId = item.uuid
+            // 存值
+            // this._deviceId = deviceId
+            // this._serviceId = serviceId
+            // this._characteristicId = item.uuid
+            var _deviceId = deviceId
+            var _serviceId = serviceId          // 蓝牙特征值对应服务的 uuid
+            var _characteristicId = item.uuid  // 蓝牙特征值的 uuid
+            that.setData({
+              deviceId:_deviceId,
+              serviceId:_serviceId,
+              characteristicId:_characteristicId
+            })
             console.log('服务序号',i)
+            console.log(_deviceId,_serviceId,_characteristicId)
+            console.log(that.data.deviceId,that.data.serviceId,that.data.characteristicId)
             if (i==0){
             wx.notifyBLECharacteristicValueChange({
               state: true,
-              deviceId: this._deviceId,
-              serviceId: this._serviceId,
-              characteristicId: this._characteristicId,
+              deviceId: that.data.deviceId,
+              serviceId: that.data.serviceId,
+              characteristicId: that.data.characteristicId,
               success (res) {
                 console.log('id',i,'notify服务开启', res.errMsg)
               }
             })
              //  向低功耗蓝牙设备特征值中写入二进制数据
-             this.writeBLECharacteristicValue()
+            //  this.writeBLECharacteristicValue()
           }
           }
           if (item.properties.notify || item.properties.indicate) {
@@ -402,16 +334,6 @@ onLoad: function () {
     })
   },
 
-  // ArrayBuffer转16进制字符串示例
- ab2hex(buffer) {
-  let hexArr = Array.prototype.map.call(
-    new Uint8Array(buffer),
-    function(bit) {
-      return ('00' + bit.toString(16)).slice(-2)
-    }
-  )
-  return hexArr.join('');
-  },
 
   // 向低功耗蓝牙设备特征值中写入二进制数据
   writeBLECharacteristicValue() {
@@ -427,9 +349,6 @@ onLoad: function () {
     // console.log([0xAA, 0x55, 0x04, 0xB1, 0x00, 0x00, 0xB5])
     var buffer1 = typedArray.buffer
     console.log(buffer1)
-    // 向蓝牙设备发送一个0x00的16进制数据
-    var st = 'QE9CRFxyXG4='
-    var buffer = wx.base64ToArrayBuffer(st)
      wx.writeBLECharacteristicValue({
       deviceId: this._deviceId,
       serviceId: this._serviceId,
@@ -445,6 +364,52 @@ onLoad: function () {
     })
   },
 
+  writeValueOBD(e){
+    var that = this
+    console.log('向蓝牙设备发送@OBD\\r\\n指令')
+    // @OBD\r\n: 404f42440D0A
+    var hex = '404f42440D0A'
+    var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
+        return parseInt(h, 16)
+    }))
+    console.log(typedArray)
+    var buffer = typedArray.buffer
+    console.log(buffer)
+     wx.writeBLECharacteristicValue({
+      deviceId: that.data.deviceId,
+      serviceId: that.data.serviceId,
+      characteristicId: that.data.characteristicId,
+      value: buffer,
+      // 成功回调
+      success (res) {
+        console.log('写入二进制数据 success', res.errMsg)
+
+      },
+      fail (res){
+        console.log('写入二进制数据 失败', res.errMsg)
+      }
+    })
+     // 监听低功耗蓝牙设备的特征值变化事件
+    wx.onBLECharacteristicValueChange(function(res) {
+      // res.value是一个ArrayBuffer对象
+      // 一次指令过后会返回过个res，我们需要的是res.value，把这个值存到列表中
+      console.log(`蓝牙设备的特征值 ${res.characteristicId} 数据表变化\n, 现在的数据是 ${res.value}`)
+      var strHex = ab2hex(res.value) // 转为16进制字符串
+      console.log('16进制为：', strHex)
+      var blueData = hexCharCodeToStr(strHex)
+      console.log('字符串为：', blueData)
+      // datalist.push(blueData)
+      that.setData({
+        bluedata: {
+          strhexdata:strHex,
+          strdata:blueData
+        }
+        // dataList:datalist
+      })
+      // console.log('添加新的数据dataList:', that.dataList)
+    })
+  },
+
   // 关闭蓝牙
   closeBluetoothAdapter() {
     console.log('关闭蓝牙')
@@ -453,4 +418,63 @@ onLoad: function () {
   },
 
 
+    // ArrayBuffer转16进制字符串示例
+  ab2hex(buffer) {
+  let hexArr = Array.prototype.map.call(
+    new Uint8Array(buffer),
+    function(bit) {
+      return ('00' + bit.toString(16)).slice(-2)
+    }
+  )
+  return hexArr.join('');
+  },
+
+  // 清除指令
+  clearInstructions(e){
+    var that = this
+    console.log('向蓝牙设备发送清除指令')
+    // PAUSE\r\n: 50415553450D0A
+    var hex = '50415553450D0A'
+    var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
+        return parseInt(h, 16)
+    }))
+    console.log(typedArray)
+    var buffer = typedArray.buffer
+    console.log(buffer)
+     wx.writeBLECharacteristicValue({
+      deviceId: that.data.deviceId,
+      serviceId: that.data.serviceId,
+      characteristicId: that.data.characteristicId,
+      value: buffer,
+      // 成功回调
+      success (res) {
+        console.log('写入二进制数据 success', res.errMsg)
+
+      },
+      fail (res){
+        console.log('写入二进制数据 失败', res.errMsg)
+      }
+    })
+     // 监听低功耗蓝牙设备的特征值变化事件
+    wx.onBLECharacteristicValueChange(function(res) {
+      // res.value是一个ArrayBuffer对象
+      // 一次指令过后会返回过个res，我们需要的是res.value，把这个值存到列表中
+      console.log(`蓝牙设备的特征值 ${res.characteristicId} 数据表变化\n, 现在的数据是 ${res.value}`)
+      var strHex = ab2hex(res.value) // 转为16进制字符串
+      console.log('16进制为：', strHex)
+      var blueData = hexCharCodeToStr(strHex)
+      console.log('字符串为：', blueData)
+      // datalist.push(blueData)
+      that.setData({
+        bluedata: {
+          strhexdata:strHex,
+          strdata:blueData
+        }
+        // dataList:datalist
+      })
+      // console.log('添加新的数据dataList:', that.dataList)
+    })
+  },
+
+  
 })
