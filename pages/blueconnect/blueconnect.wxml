@@ -27,6 +27,7 @@
     <view class="textarea-wrp">
       <textarea bindblur="bindTextAreaBlur" auto-height value="{{text}}"/>
     </view>
+    
     <view >水箱温度：{{bluedata.temperature}}</view>
     <view >引擎转速：{{bluedata.eSpeed}}</view>
     <view >行车速度：{{bluedata.speed}}</view>
