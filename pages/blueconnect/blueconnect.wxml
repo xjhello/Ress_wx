@@ -1,23 +1,45 @@
-<!-- <view class="connected_info" wx:if="{{connected}}">
-  <view>
-    <text>已连接到 {{name}}</text>
-    <view class="operation">
-    <button wx:if="{{canWrite}}" size="mini" bindtap="writeBLECharacteristicValue">写数据</button>
-    <button size="mini" bindtap="closeBLEConnection">断开连接</button>
-    </view>
-  </view>
-  
-  <view style="font-size: 12px; margin-top: 10px;">
-    <view>蓝牙16进制数据: {{bluedata.strhexdata}}</view>
-    <view>蓝牙字符串数据: {{bluedata.strdata}}</view>
-  </view>
-</view> -->
-
 <button bindtap="writeValueOBD">@OBD指令</button>
 <button bindtap="">@CAR指令</button>
 <button bindtap="">@PID指令</button>
 <button bindtap="">@DTC指令</button>
 <button bindtap="closeBLEConnection">清除指令</button>
+
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <radio-group name="radio-group">
+      <label><radio value="radio1"/>16进制</label>
+      <label><radio value="radio2"/>字符串</label>
+    </radio-group>
+  </view>
+  <view class="section">
+    <view class="section__title">输入指令</view>
+    <input name="input" style="height: 2em; width: 100%;border:solid 1px #f00;" />
+  </view>
+  <view class="btn-area">
+    <button form-type="submit">发送</button>
+    <button form-type="reset">清除</button>
+  </view>
+</form>
+
+<view class="page-body">
+  <view class="page-section">
+    <view class="page-section-title">输出内容:</view>
+    <view class="textarea-wrp">
+      <textarea bindblur="bindTextAreaBlur" auto-height value="{{text}}"/>
+    </view>
+    <view >水箱温度：{{bluedata.temperature}}</view>
+    <view >引擎转速：{{bluedata.eSpeed}}</view>
+    <view >行车速度：{{bluedata.speed}}</view>
+  </view>
+
+  <!-- <view class="page-section">
+    <view class="page-section-title">这是一个可以自动聚焦的textarea</view>
+    <view class="textarea-wrp">
+      <textarea auto-focus="true" style="height: 3em" value="{{text}}"/>
+    </view>
+  </view> -->
+</view>
+
 <view style="font-size: 12px; margin-top: 10px;">
     <view>蓝牙16进制数据: {{bluedata.strhexdata}}</view>
     <view>蓝牙字符串数据: {{bluedata.strdata}}</view>

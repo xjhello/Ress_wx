@@ -57,7 +57,24 @@ Page({
     })
     wx.login({
       success: res => {
-        console.log('得到的code：', res)
+        console.log('得到的code!!!：', res)
+        var code = res.code
+        wx.request({
+          url:app.globalData.imsUrl + '/ims/wechatlogin',
+          method: 'POST',
+          data: {
+            code: this.code
+          },
+          header: {
+          'content-type': 'application/x-www-form-urlencoded'
+          },
+          success:(res)=>{
+            console.log('成功！！！',res)
+          },
+          fail:(err)=>{
+            console.log('shibai1！！！',err)
+          }
+        })
       }
     })
     // wx.login({
@@ -115,6 +132,6 @@ Page({
   },
 
   onShow: function(){
-    this.timeUpdata()
+    // this.timeUpdata()
   }
 })

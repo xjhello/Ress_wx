@@ -18,9 +18,23 @@ module.exports.len = function(arr) {
   </view>
 </view>
 
-<!-- <button bindtap="openBluetoothAdapter">开始扫描</button>
-<button bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
-<button bindtap="closeBluetoothAdapter">结束流程</button> -->
+<!-- <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <radio-group name="radio-group">
+      <label><radio value="radio1"/>16进制</label>
+      <label><radio value="radio2"/>字符串</label>
+    </radio-group>
+  </view>
+  <view class="section">
+    <view class="section__title">input</view>
+    <input name="input" style="height: 2em; width: 100%;border:solid 1px #f00;" />
+  </view>
+  <view class="btn-area">
+    <button form-type="submit">发送</button>
+    <button form-type="reset">清除</button>
+  </view>
+</form> -->
+
 
 <view class="devices_summary">已发现 {{devices.length}} 个蓝牙设备：</view>
 <scroll-view class="device_list" scroll-y scroll-with-animation>

@@ -3,7 +3,7 @@ App({
   globalData: {
     userInfo: null,
     // https://www.rseecn.com:8080/ims/user/
-    imsUrl: "https://www.rseecn.com:8080",
+    imsUrl: "https://www.rseecn.com:8090",
   },
 
   onLaunch: function () {

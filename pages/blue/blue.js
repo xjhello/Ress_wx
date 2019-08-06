@@ -10,21 +10,14 @@ function inArray(arr, key, val) {
   return -1;
 }
 
-function string2buffer(str) {
-  // 首先将字符串转为16进制
-  let val = ""
-  for (let i = 0; i < str.length; i++) {
-    if (val === '') {
-      val = str.charCodeAt(i).toString(16)
-    } else {
-      val += ',' + str.charCodeAt(i).toString(16)
-    }
+// 字符串转换为16进制
+function stringToHex(str) {
+  　　var val = "";
+  　　for(var i = 0; i < str.length; i++) {
+  　　　　if(val == "") { val = str.charCodeAt(i).toString(16); } else { val += "," + str.charCodeAt(i).toString(16); }
+  　　}
+  　　return val;
   }
-  // 将16进制转化为ArrayBuffer
-  return new Uint8Array(val.match(/[\da-f]{2}/gi).map(function (h) {
-    return parseInt(h, 16)
-  })).buffer
-}
 
 // ArrayBuffer转16进度字符串示例
 function ab2hex(buffer) {
@@ -37,6 +30,14 @@ function ab2hex(buffer) {
   return hexArr.join('');
 }
 
+
+function stringToHex(str) {
+  　　var val = "";
+  　　for(var i = 0; i < str.length; i++) {
+  　　　　if(val == "") { val = str.charCodeAt(i).toString(16); } else { val += "," + str.charCodeAt(i).toString(16); }
+  　　}
+  　　return val;
+  }
 
 // 16进制转化为字符串
 function hexCharCodeToStr(hexCharCodeStr) {
@@ -453,4 +454,5 @@ onLoad: function () {
   },
 
 
+  
 })

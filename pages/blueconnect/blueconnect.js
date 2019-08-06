@@ -9,6 +9,8 @@ function inArray(arr, key, val) {
   return -1;
 }
 
+
+// 字符串转回为ArrayBuffer对象
 function string2buffer(str) {
   // 首先将字符串转为16进制
   let val = ""
@@ -24,6 +26,24 @@ function string2buffer(str) {
     return parseInt(h, 16)
   })).buffer
 }
+
+
+// ArrayBuffer转字符串
+function  getUint8Value(e) {
+  for (var a = e, i = new DataView(a), n = "", s = 0; s < i.byteLength; s++) 
+  n += String.fromCharCode(i.getUint8(s));
+  return n
+}
+
+// 字符串转换为16进制
+function stringToHex(str) {
+  　　var val = "";
+  　　for(var i = 0; i < str.length; i++) {
+  　　　　if(val == "") { val = str.charCodeAt(i).toString(16); } else { val += str.charCodeAt(i).toString(16); }
+  　　}
+  　　return val;
+  }
+
 
 // ArrayBuffer转16进度字符串示例
 function ab2hex(buffer) {
@@ -57,6 +77,7 @@ function hexCharCodeToStr(hexCharCodeStr) {
 
 Page({
   data: {
+    text:'',
     deviceId:'',
     deviceName:'',
     dataList:[], // 数据列表
@@ -410,6 +431,86 @@ Page({
     })
   },
 
+
+  //  写数据统一函数
+  writeValue(strHex){
+    var that = this
+    var fstr = ''
+    var lstr = ''
+    var dataList = []
+    // console.log('向蓝牙设备发送@OBD\\r\\n指令')
+    // // @OBD\r\n: 404f42440D0A
+    // var hex = '404f42440D0A'
+    var typedArray = new Uint8Array(strHex.match(/[\da-f]{2}/gi).map(function (h) {
+        return parseInt(h, 16)
+    }))
+    console.log(typedArray)
+    var buffer = typedArray.buffer
+    console.log(buffer)
+     wx.writeBLECharacteristicValue({
+      deviceId: that.data.deviceId,
+      serviceId: that.data.serviceId,
+      characteristicId: that.data.characteristicId,
+      value: buffer,
+      // 成功回调
+      success (res) {
+        console.log('写入二进制数据 success', res.errMsg)
+
+      },
+      fail (res){
+        console.log('写入二进制数据 失败', res.errMsg)
+      }
+    })
+     // 监听低功耗蓝牙设备的特征值变化事件
+    wx.onBLECharacteristicValueChange(function(res) {
+      // res.value是一个ArrayBuffer对象
+      // 一次指令过后会返回过个res，我们需要的是res.value，把这个值存到列表中
+      // console.log(`蓝牙设备的特征值 ${res.characteristicId} 数据表变化\n, 现在的数据是 ${res.value}`)
+      // var kkkk = getUint8Value(res.value)
+      // console.log(kkkk)
+      
+      var strHex = ab2hex(res.value) // 转为16进制字符串
+      console.log('16进制为：', strHex)
+      var blueData = hexCharCodeToStr(strHex)
+      // console.log('字符串为：', blueData)
+      if(blueData.startsWith('$')){
+        fstr = blueData
+        console.log('以$开头:', fstr)
+      }
+      if(blueData.endsWith('\r\n')){
+        console.log('以\\r\\n开头:', blueData)
+        console.log(fstr)
+        if(fstr!=''){
+          lstr = fstr +  blueData
+          dataList = lstr.split(',')
+          console.log('水箱温度：',dataList[0],'℃')
+          console.log('引擎转速：',dataList[1])
+          console.log('行车速度：',dataList[2])
+          console.log('氧感測器：',dataList[3])
+          console.log('MAF空氣流量',dataList[4])
+          console.log('组合的字符串:', lstr)
+          that.setData({
+            bluedata: {
+              temperature:dataList[0],
+              eSpeed:dataList[1],
+              speed:dataList[2],
+            }
+          })
+        }
+        
+      }
+      // datalist.push(blueData)
+      // that.setData({
+      //   text:strHex
+      //   // bluedata: {
+      //   //   strhexdata:strHex,
+      //   //   strdata:blueData
+      //   // }
+      // })
+      // console.log('添加新的数据dataList:', that.dataList)
+    })
+  },
+
   // 关闭蓝牙
   closeBluetoothAdapter() {
     console.log('关闭蓝牙')
@@ -475,6 +576,20 @@ Page({
       // console.log('添加新的数据dataList:', that.dataList)
     })
   },
+
+
+  // 事件处理
+  formSubmit: function (e) {
+    console.log('form发生了submit事件，携带数据为：', e.detail.value)
+    var orderString =  e.detail.value.input
+    var orderHex = stringToHex(orderString) + '0D0A'
+    console.log(orderHex)
+
+    this.writeValue(orderHex)
+  },
+  formReset: function () {
+    console.log('form发生了reset事件')
+  }
 
   
 })
