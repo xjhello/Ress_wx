@@ -51,54 +51,37 @@ Page({
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
+    wx.navigateTo({
+      url: '../index/index',
+    })
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-    wx.login({
-      success: res => {
-        console.log('得到的code!!!：', res)
-        var code = res.code
-        wx.request({
-          url:app.globalData.imsUrl + '/ims/wechatlogin',
-          method: 'POST',
-          data: {
-            code: this.code
-          },
-          header: {
-          'content-type': 'application/x-www-form-urlencoded'
-          },
-          success:(res)=>{
-            console.log('成功！！！',res)
-          },
-          fail:(err)=>{
-            console.log('shibai1！！！',err)
-          }
-        })
-      }
-    })
+
     // wx.login({
     //   success: res => {
-    //     console.log('得到的code：', res)
-    //     // 获取登录
+    //     console.log('得到的code!!!：', res)
+    //     var code = res.code
     //     wx.request({
-    //       url: app.globalData.imsUrl + '/ims/getValidateCode',
+    //       url:app.globalData.imsUrl + '/ims/wechatlogin',
     //       method: 'POST',
     //       data: {
-    //         code: res.code,
+    //         code: this.code
     //       },
     //       header: {
-    //         'content-type': 'application/x-www-form-urlencoded'
+    //       'content-type': 'application/x-www-form-urlencoded'
     //       },
-    //       success(res){
-    //         var token = res.data.token
+    //       success:(res)=>{
+    //         console.log('成功！！！',res)
     //       },
-    //       fail(res){
-    //         console.log('登录失败！')
+    //       fail:(err)=>{
+    //         console.log('shibai1！！！',err)
     //       }
     //     })
     //   }
     // })
+    
   },
 
 

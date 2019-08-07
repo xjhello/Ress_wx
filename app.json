@@ -1,20 +1,19 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/Bluetooth/blue/blue",
+    "pages/chart/chart",
+    "pages/User/index/index",
     "pages/mytest/index",
     "pages/test/index",
-    "pages/from/from",
+    "pages/User/from/from",
     "pages/demo/demo",
-    "pages/eqdetail/eqdetail",
-    "pages/enable/enable",
-    "pages/product/product",
+    "pages/User/eqdetail/eqdetail",
+    "pages/User/enable/enable",
     "pages/phone/phone",
-    "pages/register/register",
-    "pages/bluetooth/bluetooth",
-    "pages/blue/blue",
-    "pages/user/user",
-    "pages/chart/chart",
-    "pages/blueconnect/blueconnect"
+    "pages/User/register/register",
+    "pages/User/user/user",
+    "pages/Bluetooth/blueconnect/blueconnect",
+    "pages/Bluetooth/viewData/viewData"
   ],
   "window": {
     "backgroundColor": "#006df0",
@@ -30,19 +29,13 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "iconPath": "image/index.png",
-        "selectedIconPath": "image/index_in.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/user/user",
+        "pagePath": "pages/User/user/user",
         "iconPath": "image/user.png",
         "selectedIconPath": "image/user_in.png",
         "text": "个人中心"
       },
       {
-        "pagePath": "pages/blue/blue",
+        "pagePath": "pages/Bluetooth/blue/blue",
         "iconPath": "image/blue.png",
         "selectedIconPath": "image/blue_in.png",
         "text": "蓝牙"

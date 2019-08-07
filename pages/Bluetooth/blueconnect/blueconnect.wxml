@@ -40,7 +40,7 @@
     </view>
   </view> -->
 </view>
-
+<x-VSS val="{{vss}}" max="300"></x-VSS>
 <view style="font-size: 12px; margin-top: 10px;">
     <view>蓝牙16进制数据: {{bluedata.strhexdata}}</view>
     <view>蓝牙字符串数据: {{bluedata.strdata}}</view>

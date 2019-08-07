@@ -1,4 +1,4 @@
-// pages/product/product.js
+// pages/Bluetooth/viewData/viewData.js
 Page({
 
   /**

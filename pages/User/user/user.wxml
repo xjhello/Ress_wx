@@ -1,6 +1,6 @@
 <view class="container">
   <image src="/image/my@bg.png" class="bg"></image>
-  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 微信身份绑定 </button>
   <img-btn-cmp wx:if="{{!hasUserInfo}}" open-type="getUserInfo" class="avatar-position" >
      <image slot="img" class="avatar" src="/image/my.png" /> 
   </img-btn-cmp>

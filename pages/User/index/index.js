@@ -1,7 +1,7 @@
 //获取应用实例
 var app = getApp();
-var hsha512  = require('sha512.js')
-var CusBase64 = require('base64.js');
+const hsha512  = require('sha512.js')
+const CusBase64 = require('base64.js');
 Page({
   data: {
     imgurls:[
@@ -11,14 +11,6 @@ Page({
     ]
   },
 
-
-  // 用户注册跳转
-  register: function(){
-    wx.navigateTo({
-      url: '../register/register',
-    })
-
-  },
 
   // salt加密用户名
   hashUname:function(salt,pwd){
@@ -85,14 +77,7 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
-      fail(res){
-        wx.hideLoading()
-        wx.showToast({
-          title: 'name服务器错误',
-          icon: 'none',
-          duration: 2000
-        })
-      },
+
       success(res) {  // 得到salt加密
         console.log('发送用户名成功!',res.data)
         if(res.data.result.result == 1 ){
@@ -111,12 +96,31 @@ Page({
             showCancel:false,
           })
         }
-      }
+      },
+
+      fail(res){
+        wx.hideLoading()
+        wx.showToast({
+          title: 'name服务器错误',
+          icon: 'none',
+          duration: 2000
+        })
+      },
     })
   },
 
   onLoad: function () {
 
   },
+
+
+  // 用户注册跳转
+  register: function(){
+    wx.navigateTo({
+      url: '../register/register',
+    })
+
+  },
+  
 
 })

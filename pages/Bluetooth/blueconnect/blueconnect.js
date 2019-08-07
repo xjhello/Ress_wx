@@ -77,6 +77,7 @@ function hexCharCodeToStr(hexCharCodeStr) {
 
 Page({
   data: {
+    vss:0,
     text:'',
     deviceId:'',
     deviceName:'',
@@ -490,6 +491,7 @@ Page({
           console.log('MAF空氣流量',dataList[4])
           console.log('组合的字符串:', lstr)
           that.setData({
+            vss:dataList[2],
             bluedata: {
               temperature:dataList[0],
               eSpeed:dataList[1],
@@ -499,15 +501,6 @@ Page({
         }
         
       }
-      // datalist.push(blueData)
-      // that.setData({
-      //   text:strHex
-      //   // bluedata: {
-      //   //   strhexdata:strHex,
-      //   //   strdata:blueData
-      //   // }
-      // })
-      // console.log('添加新的数据dataList:', that.dataList)
     })
   },
 
@@ -589,7 +582,6 @@ Page({
   },
   formReset: function () {
     console.log('form发生了reset事件')
-  }
+  },
 
-  
 })

@@ -1,0 +1,2 @@
+<x-VSS val="{{vss}}"></x-VSS>
+<!-- <c-abc val="{{number}}" number="{{number}}" bind:myevent="onGetCode"></c-abc> -->
