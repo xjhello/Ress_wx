@@ -1,5 +1,79 @@
 const app = getApp()
-const stringTool  = require('../../../utils/stringTool.js')
+// inArray方法可以检查数组元素的内容，以检查它是否与特定值匹配
+function inArray(arr, key, val) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i][key] === val) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+
+// 字符串转回为ArrayBuffer对象
+function string2buffer(str) {
+  // 首先将字符串转为16进制
+  let val = ""
+  for (let i = 0; i < str.length; i++) {
+    if (val === '') {
+      val = str.charCodeAt(i).toString(16)
+    } else {
+      val += ',' + str.charCodeAt(i).toString(16)
+    }
+  }
+  // 将16进制转化为ArrayBuffer
+  return new Uint8Array(val.match(/[\da-f]{2}/gi).map(function (h) {
+    return parseInt(h, 16)
+  })).buffer
+}
+
+
+// ArrayBuffer转字符串
+function  getUint8Value(e) {
+  for (var a = e, i = new DataView(a), n = "", s = 0; s < i.byteLength; s++) 
+  n += String.fromCharCode(i.getUint8(s));
+  return n
+}
+
+// 字符串转换为16进制
+function stringToHex(str) {
+  　　var val = "";
+  　　for(var i = 0; i < str.length; i++) {
+  　　　　if(val == "") { val = str.charCodeAt(i).toString(16); } else { val += str.charCodeAt(i).toString(16); }
+  　　}
+  　　return val;
+  }
+
+
+// ArrayBuffer转16进度字符串示例
+function ab2hex(buffer) {
+  var hexArr = Array.prototype.map.call(
+    new Uint8Array(buffer),
+    function (bit) {
+      return ('00' + bit.toString(16)).slice(-2)
+    }
+  )
+  return hexArr.join('');
+}
+
+// 16进制转化为字符串
+function hexCharCodeToStr(hexCharCodeStr) {
+  　　var trimedStr = hexCharCodeStr.trim();
+  　　var rawStr = trimedStr.substr(0,2).toLowerCase() === "0x"? trimedStr.substr(2) : trimedStr;
+  　　var len = rawStr.length;
+  　　if(len % 2 !== 0) {
+  　　　　alert("Illegal Format ASCII Code!");
+  　　　　return "";
+  　　}
+  　　var curCharCode;
+  　　var resultStr = [];
+  　　for(var i = 0; i < len;i = i + 2) {
+  　　　　curCharCode = parseInt(rawStr.substr(i, 2), 16); // ASCII Code Value
+  　　　　resultStr.push(String.fromCharCode(curCharCode));
+  　　}
+  　　return resultStr.join("");
+ }
+
 
 Page({
   data: {
@@ -77,7 +151,7 @@ Page({
         }
         const foundDevices = this.data.devices
         // deviceId:用于区分设备的 id
-        const idx =stringTool.inArray(foundDevices, 'deviceId', device.deviceId)
+        const idx = inArray(foundDevices, 'deviceId', device.deviceId)
         const data = {}
         if (idx === -1) {
           data[`devices[${foundDevices.length}]`] = device
@@ -184,6 +258,23 @@ Page({
           console.log('标号'+i+'服务'+'serviceid为'+item.uuid)
           if (item.properties.read) {     // properties该特征值支持的操作类型
             console.log('标号'+i+'该蓝牙服务为Read状态')
+            // wx.readBLECharacteristicValue({ //  读取低功耗蓝牙设备的特征值的二进制数据值
+            //   deviceId,
+            //   serviceId,
+            //   characteristicId: item.uuid,  //蓝牙特征值的 uuid
+            //   // 读取回调函数 
+            //   success (res) {
+            //     console.log('读取蓝牙服务特征值成功！:', res.errCode)
+            //   },
+
+            //   fail (){
+            //     wx.showToast({
+            //       title: '读取蓝牙服务特征值失败',
+            //       icon: 'none',
+            //       duration: 2000
+            //     });
+            //   }
+            // })
           }
           if (item.properties.write || item.properties.notify|| item.properties.indicate) {   // properties该特征值支持的操作类型
             console.log('标号'+i+'Write notify 可控制状态!')
@@ -243,9 +334,9 @@ Page({
       // res.value是一个ArrayBuffer对象
       // 一次指令过后会返回过个res，我们需要的是res.value，把这个值存到列表中
       console.log(`蓝牙设备的特征值 ${res.characteristicId} 数据表变化\n, 现在的数据是 ${res.value}`)
-      var strHex = stringTool.ab2hex(res.value) // 转为16进制字符串
+      var strHex = ab2hex(res.value) // 转为16进制字符串
       console.log('16进制为：', strHex)
-      var blueData = stringTool.hexCharCodeToStr(strHex)
+      var blueData = hexCharCodeToStr(strHex)
       console.log('字符串为：', blueData)
       datalist.push(blueData)
       _this.setData({
@@ -319,9 +410,9 @@ Page({
       // res.value是一个ArrayBuffer对象
       // 一次指令过后会返回过个res，我们需要的是res.value，把这个值存到列表中
       console.log(`蓝牙设备的特征值 ${res.characteristicId} 数据表变化\n, 现在的数据是 ${res.value}`)
-      var strHex = stringTool.ab2hex(res.value) // 转为16进制字符串
+      var strHex = ab2hex(res.value) // 转为16进制字符串
       console.log('16进制为：', strHex)
-      var blueData = stringTool.hexCharCodeToStr(strHex)
+      var blueData = hexCharCodeToStr(strHex)
       console.log('字符串为：', blueData)
       // datalist.push(blueData)
       that.setData({
@@ -355,7 +446,8 @@ Page({
       value: buffer,
       // 成功回调
       success (res) {
-        console.log('写入二进制数据 成功', res.errMsg)
+        console.log('写入二进制数据 success', res.errMsg)
+
       },
       fail (res){
         console.log('写入二进制数据 失败', res.errMsg)
@@ -363,9 +455,9 @@ Page({
     })
      // 监听低功耗蓝牙设备的特征值变化事件
     wx.onBLECharacteristicValueChange(function(res) {   
-      var strHex = stringTool.ab2hex(res.value) // 转为16进制字符串
+      var strHex = ab2hex(res.value) // 转为16进制字符串
       console.log('16进制为：', strHex)
-      var blueData = stringTool.hexCharCodeToStr(strHex)
+      var blueData = hexCharCodeToStr(strHex)
       // console.log('字符串为：', blueData)
       if(blueData.startsWith('$')){
         fstr = blueData
@@ -404,16 +496,30 @@ Page({
     this._discoveryStarted = false
   },
 
+
+    // ArrayBuffer转16进制字符串示例
+  ab2hex(buffer) {
+  let hexArr = Array.prototype.map.call(
+    new Uint8Array(buffer),
+    function(bit) {
+      return ('00' + bit.toString(16)).slice(-2)
+    }
+  )
+  return hexArr.join('');
+  },
+
   // 清除指令
   clearInstructions(e){
     var that = this
     console.log('向蓝牙设备发送清除指令')
-    // OFF\r\n: 4f46460D0A
-    var hex = '4f46460D0A'
+    // PAUSE\r\n: 50415553450D0A
+    var hex = '50415553450D0A'
     var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
         return parseInt(h, 16)
     }))
+    console.log(typedArray)
     var buffer = typedArray.buffer
+    console.log(buffer)
      wx.writeBLECharacteristicValue({
       deviceId: that.data.deviceId,
       serviceId: that.data.serviceId,
@@ -421,10 +527,11 @@ Page({
       value: buffer,
       // 成功回调
       success (res) {
-        console.log('断开当前模式成功', res.errMsg)
+        console.log('写入二进制数据 success', res.errMsg)
+
       },
       fail (res){
-        console.log('断开当前模式失败', res.errMsg)
+        console.log('写入二进制数据 失败', res.errMsg)
       }
     })
      // 监听低功耗蓝牙设备的特征值变化事件
@@ -432,9 +539,9 @@ Page({
       // res.value是一个ArrayBuffer对象
       // 一次指令过后会返回过个res，我们需要的是res.value，把这个值存到列表中
       console.log(`蓝牙设备的特征值 ${res.characteristicId} 数据表变化\n, 现在的数据是 ${res.value}`)
-      var strHex = stringTool.ab2hex(res.value) // 转为16进制字符串
+      var strHex = ab2hex(res.value) // 转为16进制字符串
       console.log('16进制为：', strHex)
-      var blueData = stringTool.hexCharCodeToStr(strHex)
+      var blueData = hexCharCodeToStr(strHex)
       console.log('字符串为：', blueData)
       // datalist.push(blueData)
       that.setData({
@@ -448,18 +555,12 @@ Page({
     })
   },
 
-  // @OBD命令
-  orderOBD:function(){
-    var OBD = stringTool.stringToHex('@OBD') + '0D0A'
-    this.writeValue(OBD)
-  },
 
-
-  // 自定义事件处理
+  // 事件处理
   formSubmit: function (e) {
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     var orderString =  e.detail.value.input
-    var orderHex = stringTool.stringToHex(orderString) + '0D0A'
+    var orderHex = stringToHex(orderString) + '0D0A'
     console.log(orderHex)
 
     this.writeValue(orderHex)
@@ -476,15 +577,7 @@ Page({
       url: '../faultData/faultData?deviceId=' + this.data.deviceId + '&serviceId='+
       this.data.serviceId + '&characteristicId=' + this.data.characteristicId
     })
-  },
 
-
-  // 跳转
-  toOBD:function(){
-    wx.navigateTo({
-      url: '../obdData/obdData?deviceId=' + this.data.deviceId + '&serviceId='+
-      this.data.serviceId + '&characteristicId=' + this.data.characteristicId
-    })
   }
 
 })

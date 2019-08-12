@@ -1,0 +1,43 @@
+<button class="cu-btn bg-grey lg"role="button"aria-disabled="false" bind:tap='orderDTC'>打开DTC</button>
+<button class="cu-btn bg-grey lg"role="button"aria-disabled="false" bind:tap='orderM03'>查看故障</button>
+<!-- <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+  </view>
+  <view class="section">
+    <view class="section__title">输入指令</view>
+    <input name="input" style="height: 2em; width: 100%;border:solid 1px #f00;" />
+  </view>
+  <view class="btn-area">
+    <button form-type="submit">发送</button>
+    <button form-type="reset">清除</button>
+  </view>
+</form> -->
+
+<textarea bindblur="bindTextAreaBlur" auto-height value="{{text}}"/>
+
+<!-- <text wx:for="{{dataList}}">
+{{item}}
+</text> -->
+
+<text>
+故障数量：{{errNum}}
+</text>
+
+<!-- <text wx:for="{{errMsg}}" class="err">
+错误码：{{item.name}}
+错误信息：{{item.cn_desc}}
+</text> -->
+
+<scroll-view class="page" wx:for="{{errMsg}}" >
+<view class="cu-list menu card-menu margin-top" >
+  <view class="cu-item">
+    <view class="content">
+      <!-- <text class="cuIcon-circlefill text-grey"></text> -->
+      <!-- <text class="cuIcon-countdownfill text-gray"></text> -->
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;text-align:right">
+      错误码：{{item.name}}
+      错误信息：{{item.cn_desc}}</text>
+    </view>
+  </view>
+</view>
+</scroll-view >

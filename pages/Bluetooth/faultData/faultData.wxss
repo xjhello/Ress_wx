@@ -1,0 +1,5 @@
+/* pages/Bluetooth/faultData/faultData.wxss */
+.err {
+    font-size: 30rpx;
+    color: brown 
+}

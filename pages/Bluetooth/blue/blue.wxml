@@ -8,6 +8,12 @@ module.exports.len = function(arr) {
 }
 </wxs>
 
+<text wx:for="{{err}}">
+  {{item[0]}}
+  {{item[2]}}
+</text>
+
+
 <view class="page">
 <view style="height:30rpx;">
 </view>

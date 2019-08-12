@@ -1,0 +1,51 @@
+
+<scroll-view class="page">
+<view class="cu-list menu card-menu margin-top" >
+  <view class="cu-item">
+    <view class="content">
+      <!-- <text class="cuIcon-circlefill text-grey"></text> -->
+      <text class="cuIcon-countdownfill text-gray"></text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;text-align:right">水箱温度：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{bluedata.temperature}}&nbsp;℃</text>
+    </view>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content">
+      <!-- <text class="cuIcon-circlefill text-grey"></text> -->
+      <text class="cuIcon-brandfill text-gray"></text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">引擎转速：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{bluedata.eSpeed}}&nbsp;RPM</text>
+    </view>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content">
+      <text class="cuIcon-lightfill text-grey"></text>
+      <text decode="{{true}}"class="text-grey" style="font-size:40rpx;">行车速度： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{bluedata.speed}}&nbsp;km/H</text>
+    </view>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content">
+      <text class="cuIcon-lightfill text-grey"></text>
+      <text decode="{{true}}"class="text-grey" style="font-size:40rpx;">空气流量： &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{bluedata.MAF}}&nbsp;g/Sec</text>
+    </view>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content">
+      <text class="cuIcon-lightfill text-grey"></text>
+      <text decode="{{true}}"class="text-grey" style="font-size:40rpx;">气感测器 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{bluedata.o2}}&nbsp;km/H</text>
+    </view>
+  </view>
+</view>
+</scroll-view >
+
+<x-VSS val="{{vss}}" max="300"></x-VSS>

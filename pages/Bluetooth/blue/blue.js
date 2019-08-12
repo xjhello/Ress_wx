@@ -1,67 +1,11 @@
 const app = getApp()
-
-// inArray方法可以检查数组元素的内容，以检查它是否与特定值匹配
-function inArray(arr, key, val) {
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i][key] === val) {
-      return i;
-    }
-  }
-  return -1;
-}
-
-// 字符串转换为16进制
-function stringToHex(str) {
-  　　var val = "";
-  　　for(var i = 0; i < str.length; i++) {
-  　　　　if(val == "") { val = str.charCodeAt(i).toString(16); } else { val += "," + str.charCodeAt(i).toString(16); }
-  　　}
-  　　return val;
-  }
-
-// ArrayBuffer转16进度字符串示例
-function ab2hex(buffer) {
-  var hexArr = Array.prototype.map.call(
-    new Uint8Array(buffer),
-    function (bit) {
-      return ('00' + bit.toString(16)).slice(-2)
-    }
-  )
-  return hexArr.join('');
-}
-
-
-function stringToHex(str) {
-  　　var val = "";
-  　　for(var i = 0; i < str.length; i++) {
-  　　　　if(val == "") { val = str.charCodeAt(i).toString(16); } else { val += "," + str.charCodeAt(i).toString(16); }
-  　　}
-  　　return val;
-  }
-
-// 16进制转化为字符串
-function hexCharCodeToStr(hexCharCodeStr) {
-  　　var trimedStr = hexCharCodeStr.trim();
-  　　var rawStr = trimedStr.substr(0,2).toLowerCase() === "0x"? trimedStr.substr(2) : trimedStr;
-  　　var len = rawStr.length;
-  　　if(len % 2 !== 0) {
-  　　　　alert("Illegal Format ASCII Code!");
-  　　　　return "";
-  　　}
-  　　var curCharCode;
-  　　var resultStr = [];
-  　　for(var i = 0; i < len;i = i + 2) {
-  　　　　curCharCode = parseInt(rawStr.substr(i, 2), 16); // ASCII Code Value
-  　　　　resultStr.push(String.fromCharCode(curCharCode));
-  　　}
-  　　return resultStr.join("");
- }
-
-
+const stringTool  = require('../../../utils/stringTool.js')
+const config = require('../../../config.js')
 Page({
   data: {
     dataList:[], // 数据列表
     devices: [],
+    err:[],
     connected: false,
     chs: [],
     bluedata:{}  // 蓝牙数据对象
@@ -74,7 +18,17 @@ Page({
 
 onLoad: function () {
   // getBluetoothAdapterState();
+  var err = [
+    {'asd':['adad',131]},
+    {'sda':['aaaa',23131]},
+  ]
 
+  // for(let j=0; j<config.faultList.errList.length; j++){
+  //   console.log(config.faultList.errList[j].name)
+  // }
+  // this.setData({
+  //   err:config.faultList.errList
+  // })
 },
 
   // 点击事件：初始化蓝牙模块->开始搜索蓝牙并且不断监听，有新的蓝牙出现就更新数据
@@ -201,7 +155,7 @@ onLoad: function () {
         }
         const foundDevices = this.data.devices
         // deviceId:用于区分设备的 id
-        const idx = inArray(foundDevices, 'deviceId', device.deviceId)
+        const idx = stringTool.inArray(foundDevices, 'deviceId', device.deviceId)
         const data = {}
         if (idx === -1) {
           data[`devices[${foundDevices.length}]`] = device
@@ -387,9 +341,9 @@ onLoad: function () {
       // res.value是一个ArrayBuffer对象
       // 一次指令过后会返回过个res，我们需要的是res.value，把这个值存到列表中
       console.log(`蓝牙设备的特征值 ${res.characteristicId} 数据表变化\n, 现在的数据是 ${res.value}`)
-      var strHex = ab2hex(res.value) // 转为16进制字符串
+      var strHex = stringTool.ab2hex(res.value) // 转为16进制字符串
       console.log('16进制为：', strHex)
-      var blueData = hexCharCodeToStr(strHex)
+      var blueData = stringTool.hexCharCodeToStr(strHex)
       console.log('字符串为：', blueData)
       datalist.push(blueData)
       _this.setData({
@@ -401,17 +355,6 @@ onLoad: function () {
       })
       console.log('添加新的数据dataList:', _this.dataList)
     })
-  },
-
-  // ArrayBuffer转16进制字符串示例
- ab2hex(buffer) {
-  let hexArr = Array.prototype.map.call(
-    new Uint8Array(buffer),
-    function(bit) {
-      return ('00' + bit.toString(16)).slice(-2)
-    }
-  )
-  return hexArr.join('');
   },
 
   // 向低功耗蓝牙设备特征值中写入二进制数据
@@ -454,5 +397,4 @@ onLoad: function () {
   },
 
 
-  
 })

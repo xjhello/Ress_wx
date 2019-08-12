@@ -1,13 +1,29 @@
-<view class="dialChartWrap" style="width:{{width}}rpx;height:{{height}}rpx">
-    <canvas class="_canvas" canvas-id="dial-canvas"
-        style="width:{{width}}rpx;height:{{width / 750 * 400}}rpx;top:{{(height - width / 750 * 400) / 2}}rpx"
-    ></canvas>
-    <view class="_pointer" animation='{{animationData}}'
-         style="width:{{width}}rpx;height:{{width}}rpx;top:{{(height - width / 750 * 400) / 2}}rpx"
-    ></view>
-    <view class="_content flex-col justify-center">
-        <view class="_text" style="font-size: {{width / 10}}rpx;color:{{currentColor}}">
-        速率：{{val}}%
-        </view>
-    </view>
+<view class="nav-list nav-list">
+    <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
+        <view class="nav-title nav-title">操作条</view>
+        <view class="nav-name nav-name">bar</view>
+        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
+    </navigator>
+
+     <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
+        <view class="nav-title nav-title">操作条</view>
+        <view class="nav-name nav-name">bar</view>
+        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
+    </navigator>
+     <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
+        <view class="nav-title nav-title">操作条</view>
+        <view class="nav-name nav-name">bar</view>
+        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
+    </navigator>
+     <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
+        <view class="nav-title nav-title">操作条</view>
+        <view class="nav-name nav-name">bar</view>
+        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
+    </navigator>
+     <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
+        <view class="nav-title nav-title">操作条</view>
+        <view class="nav-name nav-name">bar</view>
+        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
+    </navigator>
 </view>
+

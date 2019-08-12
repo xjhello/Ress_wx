@@ -1,19 +1,22 @@
 {
   "pages": [
+    
     "pages/Bluetooth/blue/blue",
     "pages/chart/chart",
     "pages/User/index/index",
     "pages/mytest/index",
     "pages/test/index",
     "pages/User/from/from",
-    "pages/demo/demo",
     "pages/User/eqdetail/eqdetail",
     "pages/User/enable/enable",
     "pages/phone/phone",
+    "pages/demo/demo",
     "pages/User/register/register",
     "pages/User/user/user",
     "pages/Bluetooth/blueconnect/blueconnect",
-    "pages/Bluetooth/viewData/viewData"
+    "pages/Bluetooth/viewData/viewData",
+    "pages/Bluetooth/faultData/faultData",
+    "pages/Bluetooth/obdData/obdData"
   ],
   "window": {
     "backgroundColor": "#006df0",
