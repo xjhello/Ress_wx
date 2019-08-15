@@ -7,7 +7,7 @@
     ></view>
     <view class="_content flex-col justify-center">
         <view class="_text" style="font-size: {{width / 10}}rpx;color:{{currentColor}}">
-        速率：{{val}}%
+        {{val}} km/H
         </view>
     </view>
 </view>

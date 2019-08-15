@@ -36,7 +36,7 @@ Component({
         },
         height: {
             type: Number,
-            value: 400
+            value: 300
         },
         colors: {
             type: Array,

@@ -19,7 +19,7 @@
 
 .avatar-position{
   position:absolute; 
-  top:255rpx;
+  top:145rpx;
 }
 
 .my-img{
@@ -121,7 +121,7 @@
 .UCenter-bg {
   background-image: url(https://image.weilanwl.com/color2.0/index.jpg);
   background-size: cover;
-  height: 550rpx;
+  height: 505rpx;
   display: flex;
   justify-content: center;
   padding-top: 40rpx;

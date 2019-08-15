@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/Bluetooth/blue/blue",
     "pages/chart/chart",
     "pages/User/index/index",
@@ -16,13 +15,18 @@
     "pages/Bluetooth/blueconnect/blueconnect",
     "pages/Bluetooth/viewData/viewData",
     "pages/Bluetooth/faultData/faultData",
-    "pages/Bluetooth/obdData/obdData"
+    "pages/Bluetooth/obdData/obdData",
+    "pages/Bluetooth/test/test",
+    "pages/Bluetooth/demo/demo",
+    "pages/Bluetooth/demo/err/index",
+    "pages/Bluetooth/demo/obd/index",
+    "pages/Bluetooth/faultData/historyData/historyData"
   ],
   "window": {
     "backgroundColor": "#006df0",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#008B8B",
-    "navigationBarTitleText": "上海荣瑟电子",
+    "navigationBarTitleText": "Rsee-Link",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {

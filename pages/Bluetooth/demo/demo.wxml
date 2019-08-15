@@ -1,8 +1,7 @@
-<view class="vtop">
+<view class="vtop" style="font-size:90rpx;text-align:center">
+    数据演示
 </view>
 
-<!-- <image class="png png"mode="widthFix" src="/image/BasicsBg.png"style="width:100%;height:200px">
-</image> -->
 <view class="nav-list nav-list">
 
     <navigator class="nav-li nav-li bg-green bg-green"hover-class="none" bindtap="toOBD">
@@ -11,22 +10,22 @@
         <text class="cuIcon-deliver_fill cuIcon-deliver_fill"></text>    
     </navigator>
 
-    <navigator class="nav-li nav-li bg-red bg-red"hover-class="none"  bindtap="toFault">
+    <navigator class="nav-li nav-li bg-red bg-red"hover-class="none" role="navigation" bindtap="toErr">
         <view class="nav-title nav-title">故障信息</view>
         <view class="nav-name nav-name">Err</view>
         <!-- <text class="cuIcon-vipcard cuIcon-vipcard"></text> -->
         <text class="cuIcon-warnfill cuIcon-warnfill"></text>
     </navigator>
 
-    <navigator class="nav-li nav-li bg-cyan bg-cyan"hover-class="none" bindtap="toTest">
-        <view class="nav-title nav-title">蓝牙测试</view>
+    <navigator class="nav-li nav-li bg-cyan bg-cyan"hover-class="none"role="navigation" bindtap="toTest">
+        <view class="nav-title nav-title">测试蓝牙</view>
         <view class="nav-name nav-name">Test</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
 
-    <navigator class="nav-li nav-li bg-brown bg-brown"hover-class="none">
-        <view class="nav-title nav-title">自定义查看</view>
-        <view class="nav-name nav-name">Find</view>
+    <navigator class="nav-li nav-li bg-brown bg-brown"hover-class="none"url="/pages/component/bar/bar"role="navigation">
+        <view class="nav-title nav-title">DTC指令</view>
+        <view class="nav-name nav-name">Dtc</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
     
@@ -41,30 +40,7 @@
         <view class="nav-name nav-name">cle</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
-    
-    <navigator class="nav-li nav-li bg-grey bg-grey"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">待开发</view>
-        <view class="nav-name nav-name">cle</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
-    
-    <navigator class="nav-li nav-li bg-grey bg-grey"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">待开发</view>
-        <view class="nav-name nav-name">cle</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
-    
-    <navigator class="nav-li nav-li bg-grey bg-grey"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">待开发</view>
-        <view class="nav-name nav-name">cle</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
-     
-    <navigator class="nav-li nav-li bg-grey bg-grey"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">待开发</view>
-        <view class="nav-name nav-name">cle</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
+  
 </view>
 
 

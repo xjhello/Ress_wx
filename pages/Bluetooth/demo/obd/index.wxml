@@ -1,0 +1,54 @@
+<view >
+  <scroll-view class="page">
+
+    <view class="cu-list menu card-menu margin-top" >
+      <view class="cu-item">
+        <view class="content" style="display:flex;justify-content:space-between;">
+          <text class="text-gray" style="font-size:50rpx;">水箱温度:</text>
+          <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{Temperature}}&nbsp;℃</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="cu-list menu card-menu margin-top">
+      <view class="cu-item">
+        <view class="content" style="display:flex;justify-content:space-between;">
+          <text class="text-gray" style="font-size:45rpx;">引擎转速:</text>
+          <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{rpm}}&nbsp;RPM</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="cu-list menu card-menu margin-top">
+      <view class="cu-item">
+        <view class="content" style="display:flex;justify-content:space-between;">
+          <text class="text-gray" style="font-size:45rpx;">行车速度:</text>
+          <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{vcc}}&nbsp;km/H</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="cu-list menu card-menu margin-top">
+      <view class="cu-item">
+        <view class="content" style="display:flex;justify-content:space-between;">
+          <text class="text-gray" style="font-size:45rpx;">空气流量:</text>
+          <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{co1}}&nbsp;g/Sec</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="cu-list menu card-menu margin-top">
+      <view class="cu-item">
+        <view class="content" style="display:flex;justify-content:space-between;">
+          <text class="text-gray" style="font-size:45rpx;">气感测器:</text>
+          <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{co2}}&nbsp;</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+
+<view style="padding-top:20rpx;">
+<x-VSS val="{{vcc}}" max="200"></x-VSS>
+</view>

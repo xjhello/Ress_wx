@@ -10,8 +10,8 @@ Page({
   },
 
 
-//  写数据统一函数
-writeValue(strHex){
+  //  写数据统一函数
+  writeValue(strHex){
   var that = this
   var fstr = ''
   var lstr = ''
@@ -69,15 +69,49 @@ writeValue(strHex){
       }
     }
   })
-},
+  },
 
 
    // @OBD命令
-   orderOBD:function(){
+  orderOBD:function(){
     var OBD = stringTool.stringToHex('@OBD') + '0D0A'
     this.writeValue(OBD)
   },
 
+
+  // 斷開當前模式
+  clearInstructions(e){
+    this.setData({
+      strHex:'',
+      text: '',
+      dataList:[],
+      datastr:''
+    })
+    var that = this
+    console.log('向蓝牙设备发送清除指令')
+    // OFF\r\n: 4f46460D0A
+    var hex = '4f46460D0A'
+    var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
+        return parseInt(h, 16)
+    }))
+    var buffer = typedArray.buffer
+     wx.writeBLECharacteristicValue({
+      deviceId: that.data.deviceId,
+      serviceId: that.data.serviceId,
+      characteristicId: that.data.characteristicId,
+      value: buffer,
+      // 成功回调
+      success (res) {
+        console.log('断开当前模式成功', res.errMsg)
+      },
+      fail (res){
+        console.log('断开当前模式失败', res.errMsg)
+      }
+    })
+    wx.onBLECharacteristicValueChange(function(res) {
+    })
+  },
+  
 
   /**
    * 生命周期函数--监听页面加载
@@ -113,14 +147,15 @@ writeValue(strHex){
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    console.log('斷開當前模式')
+    this.clearInstructions()
   },
 
   /**

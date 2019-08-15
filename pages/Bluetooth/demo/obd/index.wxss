@@ -1,44 +1,29 @@
-page {
+  page{ 
     color: #333;
   }
-
-  .icon image{
-   position: fixed;
-   height: 100rpx;
-   width: 100rpx;
-   bottom: 30rpx;
-   right: 30rpx;
+  
+  .vtop{
+    padding-bottom: 20rpx;
   }
+
   .devices_summary {
     margin-top: 30px;
     padding: 10px;
     font-size: 16px;
   }
   .device_list {
-    height: 400px;
+    height: 300px;
     margin: 50px 5px;
-    margin-top: 10rpx;
+    margin-top: 0;
     border: 1px solid #EEE;
     border-radius: 5px;
     width: auto;
   }
   .device_item {
-    /* border-radius:20px;  */
-    box-shadow: 5px 5px 20px rgb(87, 83, 83);
     border-bottom: 1px solid #EEE;
     padding: 10px;
     color: #666;
   }
-
-  .device_item_red {
-    /* border-radius:20px;  */
-    background-color: rgb(206, 108, 108);
-    box-shadow: 5px 5px 20px rgb(87, 83, 83);
-    border-bottom: 1px solid #EEE;
-    padding: 10px;
-    color: #666;
-  }
-
   .device_item_hover {
     background-color: rgba(0, 0, 0, .1);
   }

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "x-VSS": "../../../../components/chart/index"
+  }
+}

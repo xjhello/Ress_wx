@@ -11,8 +11,26 @@ Page({
     dataList2:[],
     datastr:'',
     errMsg:[],
-    dataErrList:[]
+    dataErrList:[],
   },
+
+
+  // 模态框显示隐藏
+  showModal(e) {
+    console.log(e)
+    let index = Number(e.currentTarget.dataset.index) 
+    console.log(index)
+    this.setData({
+      modalName: e.currentTarget.dataset.target,
+      errorIndex: index
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+
 
   //  写数据统一函数
   writeValue(strHex){
@@ -102,6 +120,7 @@ Page({
       var dataStr = stringTool.hexCharCodeToStr(dataHex)
       dataAll = dataAll + dataStr
       if(dataAll.endsWith('\r\n')){
+        console.log(dataAll)
         var ECU = dataAll.slice(0,1)
         var DTCModel = dataAll.slice(1,4)
         var errNum = dataAll.slice(4,7)
@@ -115,18 +134,35 @@ Page({
         that.setData({
           dataErrList: dataErrList
         })
+        console.log(dataErrList)
+        var name = ''
         // 1M03 20:P0043 P0092 P1043 P2043 P3043 C0043 C0092 C1043 C2043 C3043 B0043 B0092 B1043 B2043 B3043 U0043 U0092 U1043 U2043 U3043
-        for(let i=0; i<dataErrList.length; i++){
-          var name = dataErrList[i]    
-            for(let j=0; j<config.faultList.errList.length; j++){
-              if(name == config.faultList.errList[j].name){
-                errList.push(config.faultList.errList[j])
-                that.setData({
-                  errMsg: errList
+        for(var i=0; i<dataErrList.length; i++){
+           name = dataErrList[i] 
+          for(var j=0; j<config.faultList.errList.length; j++){
+            // console.log('内层for',i,'--',j,name)
+            // console.log('errList',config.faultList.errList[j].name)
+            if(name == config.faultList.errList[j].name)
+            { 
+              // console.log('加有效数据',name)
+              errList.push(config.faultList.errList[j])
+              break
+            }else{
+              // 这里一定要判断是不是遍历完了也没有相应的故障码，否则会就添加重复数据
+              if(j==config.faultList.errList.length-1){
+                // console.log('加wu效数据',name)
+                errList.push({
+                  name:name,
+                  cn_desc:'暂无详细信息'
                 })
-            } 
+              } 
+            }
           }
-        }    
+        }   
+        that.setData({
+          errMsg: errList
+        })
+        console.log(errList)
       }
     })
   },
@@ -161,25 +197,6 @@ Page({
     // this.orderDTC(orderDTC)
     var order = stringTool.stringToHex('@M03') + '0D0A'
     this.orderM03(order)
-    
-    // wx.request({
-    //   url: 'http:///192.168.2.66:8090/ims/api/ims/dtcData',
-    //   method: 'GET',
-    //   header: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   data: {
-    //     dtcCode:'P0001'
-    //   },
-    //   success:(res)=>{
-        
-    //   },
-    //   fail:(err)=>{
-
-    //   }
-    // })
-
-
   },
 
    // 事件处理
@@ -193,6 +210,19 @@ Page({
   },
 
 
+  // 清除故障數據
+  clearErr: function(e){
+
+  },
+
+
+  // 跳轉
+  toHistory: function(){
+    wx.navigateTo({
+      url: 'historyData/historyData'
+    })
+  },
+
   onLoad: function (options) {
     let deviceId = options.deviceId
     let serviceId = options.serviceId
@@ -203,6 +233,12 @@ Page({
       serviceId: serviceId,
       characteristicId: characteristicId,
     })
+    wx.showToast({
+      title: '功能初始化中',
+      icon: 'loading',
+      duration: 2000
+    })
+    this.orderDTC()
   },
 
   /**
@@ -223,13 +259,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+ 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+   
 
   },
 

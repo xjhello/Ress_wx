@@ -1,29 +1,30 @@
-<view class="nav-list nav-list">
-    <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">操作条</view>
-        <view class="nav-name nav-name">bar</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
-
-     <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">操作条</view>
-        <view class="nav-name nav-name">bar</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
-     <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">操作条</view>
-        <view class="nav-name nav-name">bar</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
-     <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">操作条</view>
-        <view class="nav-name nav-name">bar</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
-     <navigator class="nav-li nav-li bg-purple bg-purple"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">操作条</view>
-        <view class="nav-name nav-name">bar</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
+<scroll-view class="page">
+<view class="cu-list menu card-menu margin-top" >
+  <view class="cu-item">
+    <view class="content">
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;color:crimson">错误码：23121
+      </text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">撒大大大大大阿达</text>
+    </view>
+  </view>
 </view>
 
+<view class="cu-list menu card-menu margin-top" >
+  <view class="cu-item">
+    <view class="content">
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;color:crimson">错误码：3123
+      </text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">读取为多群多群无多群无多</text>
+    </view>
+  </view>
+</view>
+<view class="cu-list menu card-menu margin-top" >
+  <view class="cu-item">
+    <view class="content">
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;color:crimson">错误码：{{item.name}}
+      </text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">2萨达萨达是对方</text>
+    </view>
+  </view>
+</view>
+</scroll-view >

@@ -61,6 +61,20 @@ Page({
    countDownNum: '60'//倒计时初始值
   },
   
+
+  showModal(e) {
+    console.log(e)
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+
+
   abc:function(){
     console.log('213213123213213213')
   },

@@ -3,6 +3,7 @@ const stringTool  = require('../../../utils/stringTool.js')
 
 Page({
   data: {
+    timerTask:'', //  本页面的定时任务
     vss:0,
     text:'',
     deviceId:'',
@@ -132,7 +133,13 @@ Page({
   // 断开蓝牙连接
   closeBLEConnection() {
     wx.closeBLEConnection({
-      deviceId: this.data.deviceId
+      deviceId: this.data.deviceId,
+      success(){
+        console.log('断开连接！！！')
+      },
+      fail(){
+
+      }
     })
     this.setData({
       connected: false,
@@ -335,7 +342,6 @@ Page({
     })
   },
 
-
   //  写数据统一函数
   writeValue(strHex){
     var that = this
@@ -485,6 +491,105 @@ Page({
       url: '../obdData/obdData?deviceId=' + this.data.deviceId + '&serviceId='+
       this.data.serviceId + '&characteristicId=' + this.data.characteristicId
     })
-  }
+  },
+
+  toTest:function(){
+    wx.navigateTo({
+      url: '../test/test?deviceId=' + this.data.deviceId + '&serviceId='+
+      this.data.serviceId + '&characteristicId=' + this.data.characteristicId
+    })
+  },
+
+    // 检测蓝牙是否连接
+  getConnectedBluetoothDevices(testId){
+    var that = this
+      wx.getConnectedBluetoothDevices({
+         services:testId,
+         success (res) {
+           console.log(res.devices)
+           if(res.devices.length!=0){
+             console.log(res.devices,'蓝牙已经连接')
+           }else{
+            clearInterval(that.data.timerTask)
+             console.log('蓝牙已经断开')
+             wx.showModal({
+               title: '提示',
+               content: '蓝牙已断开！',
+               success (res) {
+                 if (res.confirm) {
+                  //  跳转
+                   wx.switchTab({
+                     url: '../blue/blue'
+                   })
+                 } else if (res.cancel) {
+                   console.log('用户点击取消')
+                 }
+               }
+             })
+           }
+         },
+         fail(err){
+           
+         }
+       })
+   },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    var that = this
+    console.log('蓝牙页面卸载')
+    that.closeBLEConnection([that.data.deviceId])
+    console.log('清除定时器！')
+    clearInterval(that.data.timerTask)
+    wx.showModal({
+      title: '提示',
+      content: '蓝牙断开连接！',
+      showCancel:false,
+      success (res) {
+        if (res.confirm) {
+          
+        } 
+      }
+    })
+  
+    // wx.showToast({
+    //   title: '蓝牙断开连接！',
+    //   icon: 'none',
+    //   duration: 2000
+    // })
+    // console.log('蓝牙页面卸载')
+    // this.closeBLEConnection([this.data.deviceId])
+    // console.log('清除定时器！')
+    // clearInterval(this.data.timerTask)
+  },
+
+
+  /**
+   * 生命周期函数--监听页面展示
+   */
+  onShow: function(){
+    // 设置定时器5s检查蓝牙状态
+    var that = this
+    console.log('设置定时器5s检查蓝牙状态')
+    that.setData({
+      timerTask:setInterval(function(){
+        console.log('检查状态')
+        that.getConnectedBluetoothDevices()
+      },3000)
+    })
+  },
+
+
+ 
+
+   /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+    console.log('清除定时器！')
+    clearInterval(this.data.timerTask)
+  },
 
 })

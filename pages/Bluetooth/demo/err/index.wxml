@@ -1,0 +1,45 @@
+
+<view class="padding flex flex-direction">
+<button class="cu-btn bg-grey lg"role="button"aria-disabled="false">清除故障</button>
+<button class="cu-btn bg-red margin-tb-sm lg"role="button"aria-disabled="false" bind:tap='orderM03'>查看故障</button>
+</view>
+
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">错误信息</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl"style="font-size:45rpx;">
+      {{testData[errorIndex].cn_desc}}
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="hideModal">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-list menu" >
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-grey" style="font-size:40rpx;color: red;">故障数量：{{num}}</text>
+   </view>
+  </view>
+</view>
+
+<scroll-view class="page" wx:for="{{testData}}" >
+<view class="cu-list menu card-menu margin-top" bindtap="showModal" data-target="DialogModal1" data-index="{{index}}">
+  <view class="cu-item">
+    <view class="content">
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;color:crimson">错误码：{{item.name}}
+      </text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{item.cn_desc}}</text>
+    </view>
+  </view>
+</view>
+</scroll-view >

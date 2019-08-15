@@ -3,7 +3,8 @@ var app = getApp();
 var ringChart = null;
 Page({
     data: {
-        number:0
+        number:0,
+        Timer:''
     },
 
   // 定时任务刷新数据
@@ -35,6 +36,7 @@ Page({
   },
     
   onReady: function (e) {
+        var that = this
         var windowWidth = 320;
         try {
             var res = wx.getSystemInfoSync();
@@ -91,15 +93,35 @@ Page({
         ringChart.addEventListener('renderComplete', () => {
             console.log('renderComplete');
         });
-        setTimeout(() => {
-            ringChart.stopAnimation();
-        }, 500);
+       
+    },
+
+    onShow: function (e) {
+        var that = this
+        this.setData({
+            Timer:setInterval(function(){
+                let num = Math.floor((Math.random()*100)+1);
+                that.setData({
+                    number:num
+                })
+                console.log('新的：',that.data.number)
+            },1000)
+        })
     },
 
 
+    /**
+   * 生命周期函数--监听页面隐藏
+   */
+    onHide: function () {
+        clearInterval(this.data.Timer)
+    },
 
-    onShow: function (e) {
-    //   this.timeUpdata()
-      this.numberUpdata()
-    }
+    /**
+     * 生命周期函数--监听页面卸载
+     */
+    onUnload: function () {
+        clearInterval(this.data.Timer)
+    },
+
 });
