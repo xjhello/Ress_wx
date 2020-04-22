@@ -25,9 +25,9 @@
         <view class="system_info_area">
           <block wx:for="{{eqList}}">
           <view class="system_info_single">
-                <text class="system_info_title">{{item}}</text>
+                <text class="system_info_title">{{item.devCode}}</text>
                 <!-- <button bindtap="getEqDetail" id="{{item}}">获取详情</button> -->
-                <button size="mini" type="primary" bindtap="getEqDetail" id="{{item}}">获取详情</button>
+                <button size="mini" type="primary" bindtap="getEqDetail" id="{{item.devCode}}">获取详情</button>
                 <!-- <input class="system_info_value" disabled="{{ true }}" type="text" placeholder="未获取" value="{{ systemInfo.model }}"/> -->
             </view>   
           </block>         
@@ -36,13 +36,3 @@
             <button type="primary" plain bindtap="enableEquipment">激活更多设备</button>
         </view>
     </view>
-
-  <!-- <view class="tab-content">
-      <block wx:for="{{mydata['data']}}" wx:for-item="item">
-        <text>
-            设备id:{{item['id']}},
-            状态码:{{item['code']}},
-            设备名称:{{item['name']}}
-            </text>
-      </block>
-    </view> -->

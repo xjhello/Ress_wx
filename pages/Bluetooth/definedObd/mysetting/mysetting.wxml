@@ -1,0 +1,5 @@
+<view>水箱温度<switch data-index='0' checked="{{userDefined[0]}}" bindchange="switchChange"/></view>
+<view>引擎转速<switch data-index='1' checked="{{userDefined[1]}}" bindchange="switchChange"/></view>
+<view>行车速度<switch data-index='2' checked="{{userDefined[2]}}" bindchange="switchChange"/></view>
+<view>空气流量<switch data-index='3' checked="{{userDefined[3]}}" bindchange="switchChange"/></view>
+<view>气感测器<switch data-index='4' checked="{{userDefined[4]}}" bindchange="switchChange"/></view>

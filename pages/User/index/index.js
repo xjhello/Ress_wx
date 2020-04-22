@@ -22,6 +22,7 @@ Page({
 
   // 加密密码后请求登录
   hashLogin:function(newBase64,id){
+    var that = this
     wx.request({
       url: app.globalData.imsUrl + '/ims/login',
       method: 'POST',
@@ -42,12 +43,22 @@ Page({
       },
       success(res) {
         // 密码检测
+        var accessToekn = res.data.result
+        console.log('>>>>>>>>>>>>>>',res.data.result)
+        that.setData({
+          accessToekn
+        })
         if (res.data.success == true){
           wx.hideLoading()
           console.log(res.data)
+          // wx.navigateTo({
+          //   url: '../from/from?id=' + id + '&accessToekn=' + accessToekn,
+          // })
+
           wx.navigateTo({
-            url: '../from/from?id=' + id,
+            url: '../user/user?id=' + id + '&accessToekn=' + accessToekn,
           })
+
         }else{
           wx.hideLoading()
           wx.showModal({

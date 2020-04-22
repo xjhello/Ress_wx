@@ -12,31 +12,60 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
-  // 进入我的设备
-  toList: function(e){
-    // 获取缓存
-    try {
-      var value = wx.getStorageSync('username')
-      if (value) {
-        
-      }else{
-        wx.showModal({
-          title: '提示！',
-          content: '未登录！',
-          showCancel:false,
-        })
-      }
-    } catch (es) {
-      
-    }
+
+  onLoad: function (options) {
+    var uid = options.id
+    var accessToekn = options.accessToekn
+    console.log('***********',accessToekn)
+    this.setData({
+      id:uid,
+      accessToekn
+    })
+    this.getDataByName(uid)
   },
 
   // 激活设备
-  enAble: function (){
-    console.log('2222222')
+  enableEquipment: function(){
     wx.navigateTo({
-      url: '../index/index',
+      url: '../enable/enable'
     })
+  },
+
+  // 获取设备列表
+  getDataByName: function (uid) {
+    var that = this;
+    var urls = ''
+    console.log('要查询的用户名称:' + uid)
+    console.log('要查询的用户名称:' + that.data.accessToekn)
+    wx.request({
+      url: app.globalData.imsUrl + '/ims/api/device/userDevice?username=' + uid,
+      method: 'POST',
+      header: {
+        'content-type': 'application/json;charset=UTF-8', // 默认值
+        'accessToken': that.data.accessToekn
+      },
+      success(res){
+        var sss = JSON.stringify(res.data)
+        console.log('res:  ',res.data)
+        wx.setStorageSync('eqList', res.data.result)
+        that.setData({
+          eqList: res.data.result,
+          uname:uid,
+        })
+      }
+    })
+  },
+
+  // 激活设备
+  myEquipment: function (){
+    var that = this
+    wx.navigateTo({
+      url: '../from/from?id=' + that.data.id + '&accessToekn=' + that.data.accessToekn,
+    })
+
+    // wx.navigateTo({
+    //   url: '../from/from?id=' + that.data.id + '&accessToekn=' + that.data.accessToekn + '&eqList=' + that.data.eqList,
+    // })
   },
 
   // 绑定用户
@@ -58,30 +87,6 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-
-    // wx.login({
-    //   success: res => {
-    //     console.log('得到的code!!!：', res)
-    //     var code = res.code
-    //     wx.request({
-    //       url:app.globalData.imsUrl + '/ims/wechatlogin',
-    //       method: 'POST',
-    //       data: {
-    //         code: this.code
-    //       },
-    //       header: {
-    //       'content-type': 'application/x-www-form-urlencoded'
-    //       },
-    //       success:(res)=>{
-    //         console.log('成功！！！',res)
-    //       },
-    //       fail:(err)=>{
-    //         console.log('shibai1！！！',err)
-    //       }
-    //     })
-    //   }
-    // })
-    
   },
 
 
@@ -105,14 +110,14 @@ Page({
   },
 
   
-  onLoad: function () {
-    if (app.globalData.userInfo!=null){
-      this.setData({
-        userInfo:app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    }
-  },
+  // onLoad: function () {
+  //   if (app.globalData.userInfo!=null){
+  //     this.setData({
+  //       userInfo:app.globalData.userInfo,
+  //       hasUserInfo: true
+  //     })
+  //   }
+  // },
 
   onShow: function(){
     // this.timeUpdata()

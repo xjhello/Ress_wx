@@ -24,19 +24,19 @@
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
 
-    <navigator class="nav-li nav-li bg-brown bg-brown"hover-class="none">
+    <navigator class="nav-li nav-li bg-brown bg-brown"hover-class="none" bindtap="toDefinded">
         <view class="nav-title nav-title">自定义查看</view>
         <view class="nav-name nav-name">Find</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
     
-    <navigator class="nav-li nav-li bg-yellow bg-yellow"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">历史信息</view>
-        <view class="nav-name nav-name">His</view>
+    <navigator class="nav-li nav-li bg-yellow bg-yellow"hover-class="none" bindtap="toMPID">
+        <view class="nav-title nav-title">MPID</view>
+        <view class="nav-name nav-name">PID</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
     
-    <navigator class="nav-li nav-li bg-orange bg-orange"hover-class="none"url="/pages/component/bar/bar"role="navigation">
+    <navigator class="nav-li nav-li bg-orange bg-orange"hover-class="none" bindtap="toCar">
         <view class="nav-title nav-title">车辆状态</view>
         <view class="nav-name nav-name">cle</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>

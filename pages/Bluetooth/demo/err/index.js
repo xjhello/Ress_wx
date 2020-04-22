@@ -29,6 +29,14 @@ Page({
     })
   },
 
+
+    // 跳轉
+  toHistory: function(){
+      wx.navigateTo({
+        url: '../../faultData/storageData/index'
+      })
+    },
+
   /**
    * 生命周期函数--监听页面加载
    */

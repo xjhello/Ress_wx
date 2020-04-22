@@ -4,6 +4,7 @@
     height: 50rpx;
     text-align: center;
     padding-bottom: 10rpx;
+    margin-bottom: 20rpx;
 }
 
 .test{
@@ -19,9 +20,13 @@
     padding-right: 5rpx;
     height: 2em; 
     width: 100%;
-    border:solid 1px black;
+    border:solid 1px black; 
 }
 
+.input-style{
+    margin-left: 15rpx;
+    margin-right: 15rpx;
+}
 .mytextarea{
     font-size: 35rpx;
     border:solid 1px black;

@@ -8,6 +8,9 @@ swiper image{
     height:600rpx
 }
 
+.page__hd {
+  padding: 25px;
+}
 .userinfo {
   display: flex;
   flex-direction: column;

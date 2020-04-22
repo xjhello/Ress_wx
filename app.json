@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/Bluetooth/blue/blue",
-    "pages/chart/chart",
-    "pages/User/index/index",
+    "pages/Bluetooth/MPID/index",
     "pages/mytest/index",
+    "pages/User/index/index",
     "pages/test/index",
     "pages/User/from/from",
     "pages/User/eqdetail/eqdetail",
@@ -20,7 +20,11 @@
     "pages/Bluetooth/demo/demo",
     "pages/Bluetooth/demo/err/index",
     "pages/Bluetooth/demo/obd/index",
-    "pages/Bluetooth/faultData/historyData/historyData"
+    "pages/Bluetooth/faultData/historyData/historyData",
+    "pages/Bluetooth/faultData/storageData/index",
+    "pages/Bluetooth/definedObd/index",
+    "pages/Bluetooth/definedObd/mysetting/mysetting",
+    "pages/Bluetooth/carData/carData"
   ],
   "window": {
     "backgroundColor": "#006df0",
@@ -36,7 +40,7 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/User/user/user",
+        "pagePath": "pages/User/index/index",
         "iconPath": "image/user.png",
         "selectedIconPath": "image/user_in.png",
         "text": "个人中心"
@@ -46,12 +50,6 @@
         "iconPath": "image/blue.png",
         "selectedIconPath": "image/blue_in.png",
         "text": "蓝牙"
-      },
-      {
-        "pagePath": "pages/chart/chart",
-        "iconPath": "image/product.png",
-        "selectedIconPath": "image/product_in.png",
-        "text": "可视化"
       }
     ]
   },

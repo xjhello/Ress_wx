@@ -1,6 +1,3 @@
-<!-- <button class="cu-btn bg-grey lg"role="button"aria-disabled="false" bind:tap='orderDTC'>打开DTC</button> -->
-<!-- <button class="cu-btn bg-grey lg"role="button"aria-disabled="false" bind:tap='orderM03'>查看故障</button> -->
-
 <view class="padding flex flex-direction">
 <button class="cu-btn bg-grey lg"role="button"aria-disabled="false" bindtap="clearErr">清除故障</button>
 <button class="cu-btn bg-red margin-tb-sm lg"role="button"aria-disabled="false" bind:tap='orderM03'>查看故障</button>
@@ -15,7 +12,7 @@
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
-    <view class="padding-xl">
+    <view class="padding-xl"style="font-size:30rpx;">
       {{errMsg[errorIndex].cn_desc}}
     </view>
     <view class="cu-bar bg-white justify-end">
@@ -27,26 +24,6 @@
   </view>
 </view>
 
-<!-- <form bindsubmit="formSubmit" bindreset="formReset">
-  <view class="section section_gap">
-  </view>
-  <view class="section">
-    <view class="section__title">输入指令</view>
-    <input name="input" style="height: 2em; width: 100%;border:solid 1px #f00;" />
-  </view>
-  <view class="btn-area">
-    <button form-type="submit">发送</button>
-    <button form-type="reset">清除</button>
-  </view>
-</form> -->
-
-<!-- <textarea bindblur="bindTextAreaBlur" auto-height value="{{text}}"/> -->
-
-<!-- <text wx:for="{{dataList}}">
-{{item}}
-</text> -->
-
-
 <view class="cu-list menu" >
   <view class="cu-item">
     <view class="content" style="display:flex;justify-content:space-between;">
@@ -54,22 +31,14 @@
    </view>
   </view>
 </view>
-<!-- <text class="errnum">  
-  故障数量：{{errNum}}
-</text> -->
-
-<!-- <text wx:for="{{errMsg}}" class="err">
-错误码：{{item.name}}
-错误信息：{{item.cn_desc}}
-</text> -->
 
 <scroll-view class="page" wx:for="{{errMsg}}" >
 <view class="cu-list menu card-menu margin-top" bindtap="showModal" data-target="DialogModal1" data-index="{{index}}">
   <view class="cu-item">
     <view class="content">
-      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;color:crimson">错误码：{{item.name}}
+      <text class="text-grey" style="font-size:35rpx;color:crimson">错误码：{{item.name}}
       </text>
-      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{item.cn_desc}}</text>
+      <text class="text-grey" style="font-size:30rpx;">{{item.cn_desc}}</text>
     </view>
   </view>
 </view>

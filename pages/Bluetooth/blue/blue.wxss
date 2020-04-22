@@ -30,6 +30,9 @@ page {
     color: #666;
   }
 
+  .display_none{
+    display: none
+  }
   .device_item_red {
     /* border-radius:20px;  */
     background-color: rgb(206, 108, 108);

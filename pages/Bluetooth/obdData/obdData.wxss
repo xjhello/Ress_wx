@@ -1,4 +1,6 @@
- 
+ .notShow{
+   display: none
+ }
 
   .vtop{
     padding-bottom: 20rpx;

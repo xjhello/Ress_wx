@@ -3,6 +3,7 @@ const stringTool  = require('../../../utils/stringTool.js')
 const config = require('../../../config.js')
 Page({
   data: {
+    onlyTage:false, //区别ress和其他设备标志
     a:'AABB',
     isLink:false,
     deviceId:'',//要连接的设备id
@@ -27,14 +28,12 @@ toBlue: function(e){
       url: '../blueconnect/blueconnect?deviceId='+deviceId+'&name='+name,
     })
     }else{
-          wx.showModal({
+      wx.showModal({
         title: '提示',
         content: '蓝牙未连接！',
         success (res) {
           if (res.confirm) {
-            console.log('用户点击确定')
           } else if (res.cancel) {
-            console.log('用户点击取消')
           }
         }
       })
@@ -80,16 +79,19 @@ onLoad: function () {
           icon: 'none',
           duration: 2000
         });
-        console.log('本机蓝牙未打开！', res);
       }
     })
   },
 
 
-  // 点击事件：初始化蓝牙模块->开始搜索蓝牙并且不断监听，有新的蓝牙出现就更新数据
-  openBluetoothAdapter() {
+  // 点击搜索事件：
+  // 初始化蓝牙模块->开始搜索蓝牙并且不断监听，有新的蓝牙出现就更新数据
+  openBluetoothAdapter(e) {
+    // console.log('点击事件',e)
+    var findType = e.currentTarget.dataset.findtype
+    console.log('参数：',findType)
     this.closeBluetoothAdapter()
-    console.log('初始化蓝牙模块')
+    // console.log('初始化蓝牙模块')
     wx.showToast({
       title: '蓝牙搜索中',
       icon: 'loading',
@@ -98,7 +100,7 @@ onLoad: function () {
     wx.openBluetoothAdapter({
       success: (res) => {
         console.log('初始化蓝牙模块成功', res)
-        this.startBluetoothDevicesDiscovery()
+        this.startBluetoothDevicesDiscovery(findType)
       },
       fail: (res) => {
         if (res.errCode === 10001) {
@@ -121,9 +123,9 @@ onLoad: function () {
     })
   },
 
- 
+
   //  开始蓝牙搜索
-  startBluetoothDevicesDiscovery() {
+  startBluetoothDevicesDiscovery(findType) {
     // 默认为flase
     if (this._discoveryStarted) {
       return
@@ -133,12 +135,12 @@ onLoad: function () {
     wx.startBluetoothDevicesDiscovery({
       // 是否允许重复上报同一设备。如果允许重复上报，则 wx.onBlueToothDeviceFound 方法会多次上报同一设备，但是 RSSI 值会有不同。
       allowDuplicatesKey: true,  
-      success: (res) => {
+      success:(res) => {
         console.log('开始搜寻附近的蓝牙外围设备成功', res)
         // 监听寻找到新设备的事件
-        this.onBluetoothDeviceFound()
+        this.onBluetoothDeviceFound(findType)
       },
-      fail: () =>{
+      fail:() =>{
         wx.showToast({
           title: '没有找到指定设备',
           icon: 'none',
@@ -155,7 +157,73 @@ onLoad: function () {
   },
 
   // 监听寻找到新设备的事件
-  onBluetoothDeviceFound() {
+  onBluetoothDeviceFound1(findType) {
+    var that = this
+    console.log('查询的设备类型为：',findType)
+    wx.onBluetoothDeviceFound((res) => {
+      // devices属性为 新搜索到的设备列表
+      // forEach() 方法用于调用数组的每个元素，并将元素传递给回调函数
+      // console.log('回到函数...',res.devices)
+      res.devices.forEach(device => {
+        // name:蓝牙设备名称，某些设备可能没有
+        // localName:当前蓝牙设备的广播数据段中的 LocalName 数据段
+        // console.log('开始循环...',device)
+        if (!device.name && !device.localName) {
+          return
+        }
+        // foundDevices为列表套对象的蓝牙设备清单
+        const foundDevices = this.data.devices
+        // deviceId:用于区分设备的 id
+        console.log('foundDevices为列表套对象的蓝牙设备清单',foundDevices)
+        const idx = stringTool.inArray(foundDevices, 'deviceId', device.deviceId)
+        const data = {}
+        if (idx === -1) {
+          console.log('idx=-1')
+          data[`devices[${foundDevices.length}]`] = device
+        } else {
+          console.log('有设备！',findType)
+          // 搜索类别为ress设备
+          if(findType == 'ress'){
+            // 如果是rees设备，添加标志位
+            if(device.name.startsWith('JDY')){
+                console.log('JDY设备添加标识',device)
+                // device.key = true
+                // console.log(device.key)
+                devices[idx] = device
+                // data[`devices[${idx}]`] = device
+                console.log('得到Ress蓝牙列表',devices)
+                that.setData({
+                  devices
+                })
+              }
+            }
+            if(findType == 'other'){
+              console.log('普通设备')
+              devices[idx] = device
+              console.log('得到普通设备蓝牙列表',devices)
+              that.setData({
+                devices
+              })
+              // data[`devices[${idx}]`] = device
+            }
+
+          // if(device.name.startsWith('JDY')){
+          //   console.log('JDY设备添加标识')
+          //   device.key = true
+          //   console.log(device.key)
+          // }
+          // data[`devices[${idx}]`] = device
+        }
+        // console.log('得到蓝牙列表',data)
+        // this.setData(data)
+      })
+    })
+  },
+
+
+   // 监听寻找到新设备的事件
+   onBluetoothDeviceFound(findType) {
+     var that = this
     wx.onBluetoothDeviceFound((res) => {
       // devices属性为 新搜索到的设备列表
       // forEach() 方法用于调用数组的每个元素，并将元素传递给回调函数
@@ -173,22 +241,50 @@ onLoad: function () {
         // console.log('foundDevices为列表套对象的蓝牙设备清单',foundDevices)
         const idx = stringTool.inArray(foundDevices, 'deviceId', device.deviceId)
         const data = {}
+        var devices = []
         if (idx === -1) {
           console.log('idx=-1')
           data[`devices[${foundDevices.length}]`] = device
         } else {
-          if(device.name.startsWith('JDY')){
-            console.log('JDY设备添加标识')
-            device.key = true
-            console.log(device.key)
+          console.log(findType)
+          if(findType=='ress'){
+            // 两种模式的标志位选择ress就启动筛选模板，选择其他的就不启动筛选模板
+            this.setData({
+              onlyTage:true
+            })
+            if(device.name.startsWith('JDY')){
+              console.log('是ress设备，添加')
+              // console.log('device的类型:',typeof device)
+              // devices[idx] = device
+              console.log('JDY设备添加标识')
+              device.key = true
+              // console.log('得到的表',devices,typeof devices)
+              data[`devices[${idx}]`] = device
+            }
+          }else if(findType=='other'){
+            this.setData({
+              onlyTage:false
+            })
+            console.log('是其他蓝牙设备，添加')
+              device.key = false
+              data[`devices[${idx}]`] = device 
+          }else{
+            this.setData({
+              onlyTage:false
+            })
+            device.key = false
+            console.log('不知道是什么，添加')
+            data[`devices[${idx}]`] = device
           }
-          data[`devices[${idx}]`] = device
+          // data[`devices[${idx}]`] = device
+          console.log('!!!', data)
         }
         // console.log('得到蓝牙列表',data)
         this.setData(data)
       })
     })
   },
+
 
   // 点击事件：连接低功耗蓝牙设备
   createBLEConnection(e) {
@@ -209,9 +305,13 @@ onLoad: function () {
         if (res.confirm) {
           console.log('用户点击确定')
           console.log('数据参数：', ds,deviceId,name)
+          wx.showLoading({
+            title: '连接中...',
+          })
           wx.createBLEConnection({
             deviceId,   // 用于区分设备的 id
             success: (res) => {
+              wx.hideLoading()
               console.log('蓝牙连接成功！！！')
               app.globalData.blueData.isLink = true
               app.globalData.blueData.devices = that.data.devices
@@ -256,12 +356,12 @@ onLoad: function () {
 
   // 获取蓝牙设备所有服务(service)。
   getBLEDeviceServices(deviceId) {
-    console.log('获取蓝牙设备所有服务')
+    // console.log('获取蓝牙设备所有服务')
     wx.getBLEDeviceServices({
       deviceId,  // 蓝牙设备 id
       // 成功回调
       success: (res) => {
-        console.log('蓝牙已经连接')
+        // console.log('蓝牙已经连接')
         // console.log('获取蓝牙设备所有服务成功！！！！！！！！:',res.services)
         // for (let i = 0; i < res.services.length; i++) {
         //   if (res.services[i].isPrimary) {
@@ -457,41 +557,7 @@ onLoad: function () {
     this._discoveryStarted = false
   },
 
-  onShow: function () {
-  //   var that = this
-  //   var testId = this.devices
-  //   setInterval(function(){
-  //     wx.getConnectedBluetoothDevices({
-  //       services:testId,
-  //       success (res) {
-  //         console.log(res.devices)
-  //         if(res.devices.length!=0){
-  //           console.log(res.devices,'蓝牙已经连接')
-  //         }else{
-  //           console.log('蓝牙没有连接')
-  //           app.globalData.blueData.isLink=false
-  //           that.setData({
-  //             isLink:false
-  //           })
-  //           wx.showModal({
-  //             title: '提示',
-  //             content: '蓝牙已断开！',
-  //             success (res) {
-  //               if (res.confirm) {
-  //                 console.log('用户点击确定')
-  //               } else if (res.cancel) {
-  //                 console.log('用户点击取消')
-  //               }
-  //             }
-  //           })
-  //         }
-  //       },
-  //       fail(err){
-          
-  //       }
-  //     })
-  // },10000)
-    
+  onShow: function () { 
   },
 
   onHide: function () {

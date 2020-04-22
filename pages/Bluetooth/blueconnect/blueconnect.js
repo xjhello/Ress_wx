@@ -500,15 +500,39 @@ Page({
     })
   },
 
-    // 检测蓝牙是否连接
-  getConnectedBluetoothDevices(testId){
+  toMPID:function(){
+    wx.navigateTo({
+      url: '../MPID/index?deviceId=' + this.data.deviceId + '&serviceId='+
+      this.data.serviceId + '&characteristicId=' + this.data.characteristicId
+    })
+  },
+
+
+  toDefinded:function(){
+    wx.navigateTo({
+      url: '../definedObd/index?deviceId=' + this.data.deviceId + '&serviceId='+
+      this.data.serviceId + '&characteristicId=' + this.data.characteristicId
+    })
+  },
+
+
+  toCar:function(){
+    wx.navigateTo({
+      url: '../carData/carData?deviceId=' + this.data.deviceId + '&serviceId='+
+      this.data.serviceId + '&characteristicId=' + this.data.characteristicId
+    })
+  },
+
+
+  // 检测蓝牙是否连接
+  getConnectedBluetoothDevices(){
     var that = this
       wx.getConnectedBluetoothDevices({
-         services:testId,
+        //  services:testId,
          success (res) {
-           console.log(res.devices)
+           console.log('已经连接！！')
            if(res.devices.length!=0){
-             console.log(res.devices,'蓝牙已经连接')
+             console.log('蓝牙已经连接')
            }else{
             clearInterval(that.data.timerTask)
              console.log('蓝牙已经断开')
@@ -549,10 +573,9 @@ Page({
       showCancel:false,
       success (res) {
         if (res.confirm) {
-          
         } 
       }
-    })
+  })
   
     // wx.showToast({
     //   title: '蓝牙断开连接！',
@@ -572,17 +595,15 @@ Page({
   onShow: function(){
     // 设置定时器5s检查蓝牙状态
     var that = this
-    console.log('设置定时器5s检查蓝牙状态')
-    that.setData({
-      timerTask:setInterval(function(){
-        console.log('检查状态')
-        that.getConnectedBluetoothDevices()
-      },3000)
-    })
+    console.log('设置定时器3s检查蓝牙状态')
+    // that.setData({
+    //   timerTask:setInterval(function(){
+    //     console.log('检查状态')
+    //     that.getConnectedBluetoothDevices()
+    //   },3000)
+    // })
   },
 
-
- 
 
    /**
    * 生命周期函数--监听页面隐藏

@@ -1,5 +1,6 @@
 const stringTool  = require('../../../utils/stringTool.js')
 const config = require('../../../config.js')
+const util = require('../../../utils/util.js')
 Page({
 
   data: {
@@ -116,53 +117,74 @@ Page({
       value: buffer,
     })
     wx.onBLECharacteristicValueChange(function(res) {
+      var errStorage = {}  // 错误信息缓存，包含时间和错误列表errList
       var dataHex = stringTool.ab2hex(res.value) // 转为16进制字符串
       var dataStr = stringTool.hexCharCodeToStr(dataHex)
       dataAll = dataAll + dataStr
       if(dataAll.endsWith('\r\n')){
+        dataAll = dataAll.replace(/\r\n/g,"")
         console.log(dataAll)
-        var ECU = dataAll.slice(0,1)
-        var DTCModel = dataAll.slice(1,4)
-        var errNum = dataAll.slice(4,7)
-        that.setData({
-          ECU,
-          DTCModel,
-          errNum
-        })
-        var dataErr = dataAll.slice(8)  // 从新截取的字符串
-        dataErrList = dataErr.split(' ')  // 错误码列表
-        that.setData({
-          dataErrList: dataErrList
-        })
-        console.log(dataErrList)
-        var name = ''
-        // 1M03 20:P0043 P0092 P1043 P2043 P3043 C0043 C0092 C1043 C2043 C3043 B0043 B0092 B1043 B2043 B3043 U0043 U0092 U1043 U2043 U3043
-        for(var i=0; i<dataErrList.length; i++){
-           name = dataErrList[i] 
-          for(var j=0; j<config.faultList.errList.length; j++){
-            // console.log('内层for',i,'--',j,name)
-            // console.log('errList',config.faultList.errList[j].name)
-            if(name == config.faultList.errList[j].name)
-            { 
-              // console.log('加有效数据',name)
-              errList.push(config.faultList.errList[j])
-              break
-            }else{
-              // 这里一定要判断是不是遍历完了也没有相应的故障码，否则会就添加重复数据
-              if(j==config.faultList.errList.length-1){
-                // console.log('加wu效数据',name)
-                errList.push({
-                  name:name,
-                  cn_desc:'暂无详细信息'
-                })
-              } 
+        if(dataAll.search('None Response')!=-1){
+          wx.showModal({
+            title: '提示！',
+            content: '暂无故障信息！',
+            showCancel:false,
+          })
+        }else{
+          var ECU = dataAll.slice(0,1)
+          var DTCModel = dataAll.slice(1,4)
+          var errNum = dataAll.slice(4,7)
+          that.setData({
+            ECU,
+            DTCModel,
+            errNum
+          })
+          var dataErr = dataAll.slice(8)  // 从新截取的字符串
+          dataErrList = dataErr.split(' ')  // 错误码列表
+          that.setData({
+            dataErrList: dataErrList
+          })
+          console.log(dataErrList)
+          var name = ''
+          // 1M03 20:P0043 P0092 P1043 P2043 P3043 C0043 C0092 C1043 C2043 C3043 B0043 B0092 B1043 B2043 B3043 U0043 U0092 U1043 U2043 U3043
+          for(var i=0; i<dataErrList.length; i++){
+             name = dataErrList[i] 
+            for(var j=0; j<config.faultList.errList.length; j++){
+              if(name == config.faultList.errList[j].name)
+              { 
+                errList.push(config.faultList.errList[j])
+                break
+              }else{
+                // 这里一定要判断是不是遍历完了也没有相应的故障码，否则会就添加重复数据
+                if(j==config.faultList.errList.length-1){
+                  errList.push({
+                    name:name,
+                    cn_desc:'暂无详细信息'
+                  })
+                } 
+              }
             }
           }
-        }   
-        that.setData({
-          errMsg: errList
-        })
-        console.log(errList)
+          // 组装信息到缓存
+          var errTime = util.formatTime(new Date())
+          errStorage = {
+            time: errTime,
+            info:errList
+          }
+          // 添加数据到缓存
+          var value = wx.getStorageSync('errData')
+          if(value){
+            value.push(errStorage)
+            wx.setStorageSync('errData', value)
+            that.setData({
+              errMsg: errList
+            })
+            console.log(errList)
+          }
+          that.setData({
+            errMsg: errList
+          })
+        }
       }
     })
   },
@@ -170,7 +192,7 @@ Page({
 
    //@DTC指令处理函数
    orderDTC: function(e){
-    var that = this
+      var that = this
       let strHex = stringTool.stringToHex('@DTC') + '0D0A'
       var DTCArray = new Uint8Array(strHex.match(/[\da-f]{2}/gi).map(function (h) {
         return parseInt(h, 16)
@@ -189,6 +211,12 @@ Page({
 
   },
 
+
+
+  // 保存查看的故障码到缓存中
+  saveFaultData: function(data){
+    
+  },
 
 
   // 查看故障事件
@@ -212,14 +240,28 @@ Page({
 
   // 清除故障數據
   clearErr: function(e){
-
+    var that = this
+    let strHex = stringTool.stringToHex('@M04') + '0D0A'
+    var DTCArray = new Uint8Array(strHex.match(/[\da-f]{2}/gi).map(function (h) {
+      return parseInt(h, 16)
+    }))
+    var buffer = DTCArray.buffer
+    wx.writeBLECharacteristicValue({
+      deviceId: that.data.deviceId,
+      serviceId: that.data.serviceId,
+      characteristicId: that.data.characteristicId,
+      value: buffer,
+    })
+    wx.onBLECharacteristicValueChange(function(res) {
+     console.log('清除故障成功！')
+    })
   },
 
 
   // 跳轉
   toHistory: function(){
     wx.navigateTo({
-      url: 'historyData/historyData'
+      url: 'storageData/index'
     })
   },
 

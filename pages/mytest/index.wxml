@@ -1,1 +1,144 @@
-<mychart></mychart>
+<view class="cu-list menu" >
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-grey" style="font-size:40rpx;color: red; text-align: center;">车辆信息</text>
+   </view>
+  </view>
+</view>
+
+<scroll-view class="page" wx:for="{{carInfo}}" wx:for-index="key"  wx:for-item="value">>
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content">
+      <text decode="{{true}}" class="text-grey" style="font-size:30rpx;color:crimson">{{key}}: &nbsp;&nbsp;</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:30rpx;">{{value}}</text>
+    </view>
+  </view>
+</view>
+</scroll-view>
+
+
+
+
+<button bind:tap="test" data-index='123'>111111111111</button>
+<button bind:tap="test" style="display:none" >111111111111</button>
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">22222</view>
+<view class="cu-modal">22222</view>
+<view wx:for="{{bluedata}}">{{item.index}}</view>
+<view >
+  <scroll-view class="page">
+  <view style="border:1px solid #666;padding:5rpx;"></view>
+<!-- <view wx:if="{{userDefined[0]}}" class="cu-list menu card-menu margin-top"> -->
+<view class="{{userDefined[0]?'cu-list menu card-menu margin-top':'isShow'}}">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:50rpx;">{{userDefined[0]}}水箱温度:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.temperature}}&nbsp;℃</text>
+    </view>
+  </view>
+</view>
+
+
+
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:45rpx;">引擎转速:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.eSpeed}}&nbsp;RPM</text>
+    </view>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:45rpx;">行车速度:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.speed}}&nbsp;km/H</text>
+    </view>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:45rpx;">空气流量:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.MAF}}&nbsp;g/Sec</text>
+    </view>
+  </view>
+</view>
+
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:45rpx;">气感测器:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.o2}}&nbsp;</text>
+    </view>
+  </view>
+</view>
+</scroll-view>
+</view>
+
+
+
+
+
+
+
+
+<view >
+  <scroll-view class="page">
+  <view style="border:1px solid #666;padding:5rpx; "></view>
+<view class="cu-list menu card-menu margin-top" >
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:50rpx;">水箱温度:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.temperature}}&nbsp;℃</text>
+    </view>
+    <switch checked="{{userDefined[0]}}" data-index="{{0}}"  bindchange="switchChange"/>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:45rpx;">引擎转速:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.eSpeed}}&nbsp;RPM</text>
+    </view>
+    <switch checked="{{userDefined[1]}}"data-index="{{1}}" bindchange="switchChange"/>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:45rpx;">行车速度:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.speed}}&nbsp;km/H</text>
+    </view>
+     <switch checked="{{userDefined[2]}}"data-index="{{2}}"  bindchange="switchChange"/>
+  </view>
+</view>
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:45rpx;">空气流量:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.MAF}}&nbsp;g/Sec</text>
+    </view>
+     <switch checked="{{userDefined[3]}}" bindchange="switchChange"/>
+  </view>
+</view>
+
+
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-gray" style="font-size:45rpx;">气感测器:</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{bluedata.o2}}&nbsp;</text>
+    </view>
+     <switch checked="{{userDefined[4]}}" bindchange="switchChange"/>
+  </view>
+</view>
+</scroll-view>
+</view>

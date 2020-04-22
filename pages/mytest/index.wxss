@@ -1,1 +1,4 @@
 /* pages/mytest/index.wxss */
+.isShow{
+    display:none
+}

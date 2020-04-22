@@ -4,43 +4,42 @@
 
 <view class="nav-list nav-list">
 
-    <navigator class="nav-li nav-li bg-green bg-green"hover-class="none" bindtap="toOBD">
+    <navigator class="nav-li nav-li bg-green bg-green" bindtap="toOBD">
         <view class="nav-title nav-title">实时信息</view>
         <view class="nav-name nav-name">obd</view>
         <text class="cuIcon-deliver_fill cuIcon-deliver_fill"></text>    
     </navigator>
 
-    <navigator class="nav-li nav-li bg-red bg-red"hover-class="none" role="navigation" bindtap="toErr">
+    <navigator class="nav-li nav-li bg-red bg-red" bindtap="toErr">
         <view class="nav-title nav-title">故障信息</view>
         <view class="nav-name nav-name">Err</view>
         <!-- <text class="cuIcon-vipcard cuIcon-vipcard"></text> -->
         <text class="cuIcon-warnfill cuIcon-warnfill"></text>
     </navigator>
 
-    <navigator class="nav-li nav-li bg-cyan bg-cyan"hover-class="none"role="navigation" bindtap="toTest">
+    <navigator class="nav-li nav-li bg-cyan bg-cyan"  bindtap="toTest">
         <view class="nav-title nav-title">测试蓝牙</view>
         <view class="nav-name nav-name">Test</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
 
-    <navigator class="nav-li nav-li bg-brown bg-brown"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">DTC指令</view>
+    <navigator class="nav-li nav-li bg-brown bg-brown" bindtap="toPID">
+        <view class="nav-title nav-title">PID指令</view>
         <view class="nav-name nav-name">Dtc</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
     
-    <navigator class="nav-li nav-li bg-yellow bg-yellow"hover-class="none"url="/pages/component/bar/bar"role="navigation">
-        <view class="nav-title nav-title">历史信息</view>
-        <view class="nav-name nav-name">His</view>
-        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
-    </navigator>
-    
-    <navigator class="nav-li nav-li bg-orange bg-orange"hover-class="none"url="/pages/component/bar/bar"role="navigation">
+    <navigator class="nav-li nav-li bg-orange bg-orange" bindtap="toCarData">
         <view class="nav-title nav-title">车辆状态</view>
         <view class="nav-name nav-name">cle</view>
         <text class="cuIcon-vipcard cuIcon-vipcard"></text>
     </navigator>
-  
+
+     <navigator class="nav-li nav-li bg-yellow bg-yellow" bindtap="toCarData">
+        <view class="nav-title nav-title">历史信息</view>
+        <view class="nav-name nav-name">His</view>
+        <text class="cuIcon-vipcard cuIcon-vipcard"></text>
+    </navigator>
 </view>
 
 

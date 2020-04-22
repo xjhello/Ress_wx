@@ -1,0 +1,20 @@
+<view class="cu-list menu" >
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-grey" style="font-size:40rpx;color: red; text-align: center;">车辆信息</text>
+   </view>
+  </view>
+</view>
+
+<scroll-view class="page" wx:for="{{carInfo}}" wx:for-index="key"  wx:for-item="value">
+<view class="cu-list menu card-menu margin-top">
+  <view class="cu-item">
+    <view class="content">
+      <label >
+        <text decode="{{true}}" class="text-grey" style="font-size:40rpx;color:crimson">{{key}}: &nbsp;&nbsp;</text>
+        <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{value}} </text>
+      </label>
+    </view>
+  </view>
+</view>
+</scroll-view >

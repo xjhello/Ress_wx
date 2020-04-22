@@ -2,6 +2,7 @@
 <view class="padding flex flex-direction">
 <button class="cu-btn bg-grey lg"role="button"aria-disabled="false">清除故障</button>
 <button class="cu-btn bg-red margin-tb-sm lg"role="button"aria-disabled="false" bind:tap='orderM03'>查看故障</button>
+<button class="cu-btn bg-grey lg"role="button"aria-disabled="false" bindtap="toHistory">历史信息</button>
 </view>
 
 <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
@@ -12,7 +13,7 @@
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
-    <view class="padding-xl"style="font-size:45rpx;">
+    <view class="padding-xl"style="font-size:30rpx;">
       {{testData[errorIndex].cn_desc}}
     </view>
     <view class="cu-bar bg-white justify-end">
@@ -36,9 +37,9 @@
 <view class="cu-list menu card-menu margin-top" bindtap="showModal" data-target="DialogModal1" data-index="{{index}}">
   <view class="cu-item">
     <view class="content">
-      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;color:crimson">错误码：{{item.name}}
+      <text decode="{{true}}" class="text-grey" style="font-size:35rpx;color:crimson">错误码：{{item.name}}
       </text>
-      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;">{{item.cn_desc}}</text>
+      <text decode="{{true}}" class="text-grey" style="font-size:30rpx;">{{item.cn_desc}}</text>
     </view>
   </view>
 </view>

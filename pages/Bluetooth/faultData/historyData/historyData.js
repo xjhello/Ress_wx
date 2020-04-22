@@ -10,6 +10,11 @@ Page({
     TabCur: 1,
     scrollLeft: 0
   },
+  onLoad: function (options) {
+    
+
+
+  },
   getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -18,6 +23,7 @@ Page({
       hasUserInfo: true
     })
   },
+
   showModal(e) {
     this.setData({
       modalName: e.currentTarget.dataset.target

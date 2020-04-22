@@ -19,13 +19,30 @@ Page({
   },
 
     // 跳转
-    toOBD:function(){
+  toOBD:function(){
       wx.navigateTo({
         url: 'obd/index'
       })
     },
   
+  toTest:function(){
+    wx.navigateTo({
+      url: 'test/test'
+    })
+  },
 
+  toPID:function(){
+    wx.navigateTo({
+      url: '../MPID/index'
+    })  
+  },
+
+  
+  toCarData:function(){
+    wx.navigateTo({
+      url: 'carData/carData'
+    })  
+  },
 
   /**
    * 生命周期函数--监听页面加载

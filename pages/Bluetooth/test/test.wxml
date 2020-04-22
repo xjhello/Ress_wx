@@ -1,28 +1,38 @@
-<view class='first'>测试页面</view>
+<view style="margin-left: 15rpx;margin-bottom: 10rpx;">
+  <view class='first'>测试页面</view>
 
 <form bindsubmit="formSubmit" bindreset="formReset">
-  <!-- <view class="section section_gap">
-    <radio-group name="radio-group">
-      <label><radio value="radio1"/>16进制</label>
-      <label><radio value="radio2"/>字符串</label>
+  <view class="section section_gap" style="margin-left: 15rpx;margin-bottom: 10rpx;">
+    <radio-group name="radio">
+    <label><radio checked="{{true}}" value="type-str"/>字符串</label>
+    <text decode="{{true}}">&nbsp;&nbsp;</text>
+    <label><radio value="type-hex"/>16进制</label>  
     </radio-group>
-  </view> -->
-  <view class="section">
-    <view class="section__title">输入指令</view>
-    <input name="input" style="height: 3em; width: 100%;border:solid 1px #f00;" />
   </view>
+
+  <view class="section" style="margin-left: 15rpx;margin-right: 15rpx;">
+    <view tyle="font-size: 15rpx;">输入字符串指令</view>
+    <input name="input" style="height: 3em; width: 100%;border:solid 1px #f00;"/>
+     <view style="margin-top: 10rpx;">
+       <radio-group name="isadd">
+          <label><radio checked="{{true}}" value="yes"/>加/r/n</label>
+          <text decode="{{true}}">&nbsp;&nbsp;</text>
+          <label style="margin-top: 10rpx;"><radio value="no"/>不加/r/n</label>
+      </radio-group>
+     </view>
+    <!-- <label style="margin-top: 10rpx;"><radio value="type-rn"/>自动加/r/n</label>  -->
+  </view>
+
   <view class="btn-area">
       <view class="padding flex flex-direction">
         <button form-type="submit" class="cu-btn bg-red lg" role="button"aria-disabled="false">发送</button>
         <view style="padding:5rpx;"></view>
         <button form-type="reset"  bindtap="clearInstructions" class="cu-btn bg-grey lg"role="button"aria-disabled="false">清除</button>
       </view>
-    <!-- <button form-type="submit">发送</button>
-    <button form-type="reset" bindtap="clearInstructions">清除</button> -->
   </view>
 </form>
 
-<view class="page-body">
+<view class="page-body input-style">
   <view class="page-section">
     <view class="page-section-title">字符串内容:</view>
     <view class="textarea-wrp">
@@ -49,4 +59,5 @@
       <view class="mytextarea">
       <textarea auto-height="true" value="{{datastr}}"/>
     </view></view>
+</view>
 </view>

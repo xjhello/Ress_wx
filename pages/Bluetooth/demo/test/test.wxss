@@ -1,0 +1,44 @@
+/* pages/Bluetooth/test/test.wxss */
+.first{
+    font-size: 50rpx;
+    height: 50rpx;
+    text-align: center;
+    padding-bottom: 10rpx;
+}
+
+.test{
+    padding-left: 5rpx;
+    padding-right: 5rpx;
+    height: 2em; 
+    width: 100%;
+    border:solid 1px black;
+}
+
+.test1{
+    padding-left: 5rpx;
+    padding-right: 5rpx;
+    height: 2em; 
+    width: 100%;
+    border:solid 1px black;
+}
+
+.mytextarea{
+    font-size: 35rpx;
+    border:solid 1px black;
+    /* width: 100%;
+    height: 500rpx;
+    padding-right: 15rpx;
+    padding-left: 15rpx; */
+  
+  }
+
+  /* pages/Bluetooth/faultData/faultData.wxss */
+.err {
+    font-size: 30rpx;
+    color: brown 
+}
+
+.errnum{
+    font-size: 40rpx;
+    color: red;
+}

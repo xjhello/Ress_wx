@@ -8,37 +8,43 @@ Page({
     eqList:[]
   },
 
-  // 获取设备列表
-  getDataByName: function (uid) {
+// 获取设备列表
+getDataByName: function (uid) {
     var that = this;
     var urls = ''
     console.log('要查询的用户名称:' + uid)
+    console.log('要查询的用户名称:' + that.data.accessToekn)
     wx.request({
-      url: app.globalData.imsUrl + '/userDevice?username=' + uid,
-      method: 'GET',
+      url: app.globalData.imsUrl + '/ims/api/device/userDevice?username=' + uid,
+      method: 'POST',
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json;charset=UTF-8', // 默认值
+        // 'accessToekn':  that.data.accessToekn
+        'accessToken': that.data.accessToekn
       },
       success(res){
         var sss = JSON.stringify(res.data)
-        console.log(Object.prototype.toString.call(res.data))
-        console.log('!!!!!!!!!!!',res.data)
+        // console.log(Object.prototype.toString.call(res.data))
+        console.log('res:  ',res.data)
         that.setData({
-          eqList: res.data.data,
-          uname:uid
+          eqList: res.data.result,
+          uname:uid,
         })
+       
       }
     })
     
-  },
+},
 
 
 // 点击获取详细设备信息
 getEqDetail:function(e){
+  console.log('@@@@@@@',this.data.accessToekn)
+  var that = this
   var eqname = e.currentTarget.id 
   console.log('要查询的设备名称:'+e.currentTarget.id)
     wx.navigateTo({
-      url: '../eqdetail/eqdetail?eqname=' + eqname,
+      url: '../eqdetail/eqdetail?eqname=' + eqname + '&accessToken=' + that.data.accessToekn,
     })
 },
 
@@ -51,12 +57,17 @@ enableEquipment: function(){
 
 onLoad: function (options) {
     var uid = options.id
+    var accessToekn = options.accessToekn
+    var eqList = wx.getStorageSync('eqList')
+    console.log('***********',eqList)
     this.setData({
-      uname:uid
+      uname:uid,
+      accessToekn,
+      eqList
     })
-    this.getDataByName(uid)
+    // this.getDataByName(uid)
   },
-
+  
  
   onReady: function () {
 

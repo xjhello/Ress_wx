@@ -1,12 +1,9 @@
 const stringTool  = require('../../../utils/stringTool.js')
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
     vss:0,
-    bluedata: {}
+    bluedata: {},
   },
 
 
@@ -78,9 +75,43 @@ Page({
     this.writeValue(OBD)
   },
 
+   // OFF指令
+  out:function(){
+    wx.showToast({
+      title: '退出中,请稍后...',
+      icon: 'loading',
+      duration: 1500
+      })
+    var OFF = stringTool.stringToHex('@OFF') + '0D0A'
+    var typedArray = new Uint8Array(OFF.match(/[\da-f]{2}/gi).map(function (h) {
+      return parseInt(h, 16)
+      }))
+    var buffer = typedArray.buffer
+    wx.writeBLECharacteristicValue({
+      deviceId: that.data.deviceId,
+      serviceId: that.data.serviceId,
+      characteristicId: that.data.characteristicId,
+      value: buffer,
+      success (res) {
+        console.log('写入二进制数据 成功')
+      },
+      fail (res){
+        console.log('写入二进制数据 失败')
+      }
+    })
+    wx.onBLECharacteristicValueChange(function(res) { 
+      var strHex = res.value // 转为16进制字符串
+      console.log('回调：：', strHex)  
+    })
+  },
 
   // 斷開當前模式
   clearInstructions(e){
+    wx.showToast({
+      title: '退出中,请稍后...',
+      icon: 'loading',
+      duration: 2000
+    })
     this.setData({
       strHex:'',
       text: '',
@@ -90,8 +121,9 @@ Page({
     var that = this
     console.log('向蓝牙设备发送清除指令')
     // OFF\r\n: 4f46460D0A
-    var hex = '4f46460D0A'
-    var typedArray = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
+    var OderDtc = stringTool.stringToHex('@OFF') + '0D0A'
+    // var hex = '4f46460D0A'
+    var typedArray = new Uint8Array(OderDtc.match(/[\da-f]{2}/gi).map(function (h) {
         return parseInt(h, 16)
     }))
     var buffer = typedArray.buffer
@@ -117,6 +149,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 读取缓存
+    var userDefined = wx.getStorageSync('userDefined')
+    this.setData({
+      userDefined
+    })
+    // ....
     let deviceId = options.deviceId
     let serviceId = options.serviceId
     let characteristicId = options.characteristicId
@@ -147,15 +185,16 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+    console.log('断开当前模式')
+    this.out()
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log('斷開當前模式')
-    this.clearInstructions()
+    console.log('断开当前模式')
+    this.out()
   },
 
   /**

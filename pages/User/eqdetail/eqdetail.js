@@ -13,6 +13,7 @@ Page({
 httpp:function(){
   wx.request({
     url: app.globalData.imsUrl + '/deviceData?devicename=' + eqname,
+    // /ims/api/ims/deviceData?devicename=STC9
     // url: 'https://www.swisys.com.cn:8080/api/ims/deviceData?devicename=' + eqname,
     method: 'GET',
     header: {
@@ -61,26 +62,31 @@ tabClick: function (e) {
 
   onLoad: function (options) {
     // 要查询的设备名称eqname
+    console.log('21321321：   ',options)
     var eqname = options.eqname
+    var accessToken = options.accessToken
     var that = this
-    var that = this;
+    this.setData({
+      eqname,
+      accessToken
+    })
     wx.showLoading({
       title: '获取中...',
     })
     // 请求设备参数
     wx.request({
-      url: app.globalData.imsUrl + '/ims/deviceData?devicename=' + eqname,
+      url: app.globalData.imsUrl + '/ims/api/deviceData?devicename=' + eqname,
       // url: 'https://www.swisys.com.cn:8080/api/ims/deviceData?devicename=' + eqname,
       method: 'GET',
       header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
+        'content-type': 'application/x-www-form-urlencoded', // 默认值
+        'accessToken': accessToken
       },
       success(res){
-        if(res.data.result == 1){
-          // updata();
-          // 获取成功
+        console.log('>>>>>>>>>>>>>>>>>>>>>>',res)
+        if(res.data.success == true){
           wx.hideLoading()
-          var datalist = res.data.imsLastData
+          var datalist = res.data.result
         that.setData({
           eqDataList:datalist,
           eqname:options.eqname
@@ -89,7 +95,7 @@ tabClick: function (e) {
           // 获取失败
           wx.hideLoading()
           wx.showToast({
-            title: '获取失败',
+            title: '暂时无数据',
             icon: 'none',
             duration: 2000
           })

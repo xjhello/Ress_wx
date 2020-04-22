@@ -1,0 +1,6 @@
+.first{
+    font-size: 50rpx;
+    height: 50rpx;
+    text-align: center;
+    padding-bottom: 10rpx;
+}

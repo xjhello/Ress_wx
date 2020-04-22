@@ -14,6 +14,12 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+function a(){
+  console.log(111111111111111111111111)
+  return 1232313;
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  a
 }

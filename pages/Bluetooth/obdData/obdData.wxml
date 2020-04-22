@@ -1,6 +1,4 @@
-
 <scroll-view class="page">
-  <view style="border:1px solid #666;padding:5rpx; "></view>
 <view class="cu-list menu card-menu margin-top" >
   <view class="cu-item">
     <view class="content" style="display:flex;justify-content:space-between;">
@@ -47,6 +45,5 @@
   </view>
 </view>
 </scroll-view>
-
 
 <x-VSS val="{{vss}}" max="250"></x-VSS>

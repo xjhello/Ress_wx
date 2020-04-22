@@ -37,8 +37,28 @@ Page({
  formSubmit: function (e) {
   console.log('form发生了submit事件，携带数据为：', e.detail.value)
   var orderString =  e.detail.value.input
-  var orderHex = stringTool.stringToHex(orderString) + '0D0A'
-  console.log(orderHex)
+  var type = e.detail.value.radio
+  var isadd = e.detail.value.isadd
+  if(type == 'type-hex'){
+    if(isadd == 'yes'){
+      var orderHex = orderString + '0D0A'
+      console.log(typeof orderString, orderString)
+    }else{
+      var orderHex = orderString 
+      console.log(typeof orderString, orderString)
+    }
+  }else if(type == 'type-str'){
+    if(isadd == 'yes'){
+    var orderHex = stringTool.stringToHex(orderString) + '0D0A'
+    console.log('字符类型为字符串', typeof orderHex, orderHex)
+    }else{
+      var orderHex = stringTool.stringToHex(orderString)
+    console.log('字符类型为字符串', typeof orderHex, orderHex)
+    }
+  }else{
+    var orderHex = stringTool.stringToHex(orderString) + '0D0A'
+    console.log('默认为字符串', typeof orderHex, orderHex)
+  }
   this.writeValue(orderHex)
 },
 
@@ -86,7 +106,6 @@ writeValue(strHex){
     })
   })
 },
-
 
 
 // 清除指令

@@ -8,9 +8,9 @@ module.exports.len = function(arr) {
 }
 </wxs>
 
-<view class="icon" bindtap="toBlue">
+<!-- <view class="icon" bindtap="toBlue">
   <image src="{{isLink ? icon:icon_in}}"/>
-</view>
+</view> -->
 <!-- 
   <view class="cu-item">
     <view class="content" style="display:flex;justify-content:space-between;">
@@ -35,65 +35,62 @@ module.exports.len = function(arr) {
 <view style="height:30rpx;">
 </view>
   <view class="page__bd page__bd_spacing">
-          <button class="weui-btn" type="primary" bindtap="openBluetoothAdapter">开始扫描</button>
+          <button class="weui-btn" type="warn" data-findType="ress" bindtap="openBluetoothAdapter">扫描Rsee设备</button>
+          <button class="weui-btn" type="primary" data-findType="other" bindtap="openBluetoothAdapter">扫描其他设备</button>
           <!-- <button class="weui-btn" type="warn" bindtap="stopBluetoothDevicesDiscovery">停止蓝牙扫描</button> -->
-          <button class="weui-btn" type="primary">扫描Rsee设备</button>
           <button class="weui-btn" type="primary" bind:tap="toDemo">演示模块</button>
   </view>
 </view>
-<view style="padding-bottom:10rpx;"></view>
+<view style="padding-bottom:10rpx;">
 
-<!-- <view class="devices_summary"></view> -->
-<!-- <scroll-view class="page">
-<view class="cu-list menu card-menu margin-top" >
-  <view class="cu-item">
-    <view class="content">
-      <text class=" text-gray">已发现 {{devices.length}} 个蓝牙设备：</text>
-      <text decode="{{true}}" class="text-grey" style="font-size:40rpx;text-align:right">已发现 {{devices.length}} 个蓝牙设备：</text>
+</view>
+
+<block wx:if="{{onlyTage}}">
+  <scroll-view class="page">
+  <view class="cu-list menu" >
+    <view class="cu-item">
+      <view class="content" style="display:flex;justify-content:space-between;">
+        <text class="text-grey" style="font-size:40rpx;">已发现的蓝牙设备：</text>
+        <!-- <text decode="{{true}}" class="text-grey" style="font-size:40rpx;text-align:right">已发现 {{devices.length}} 个蓝牙设备：</text> -->
+      </view>
     </view>
   </view>
-</view>
-</scroll-view> -->
-
-
-<scroll-view class="page">
-<view class="cu-list menu" >
-  <view class="cu-item">
-    <view class="content" style="display:flex;justify-content:space-between;">
-      <text class="text-grey" style="font-size:40rpx;">已发现 {{devices.length}} 个蓝牙设备：</text>
-      <!-- <text decode="{{true}}" class="text-grey" style="font-size:40rpx;text-align:right">已发现 {{devices.length}} 个蓝牙设备：</text> -->
-    </view>
-  </view>
-</view>
-</scroll-view>
-
-
-<scroll-view class="device_list" scroll-y scroll-with-animation>
+  </scroll-view>
+  <scroll-view class="device_list" scroll-y scroll-with-animation>
 <block wx:for="{{devices}}" wx:key="index">
    <view data-device-id="{{item.deviceId}}"
       data-name="{{item.name || item.localName}}"
-      bindtap="createBLEConnection" class="{{item.key?'device_item_red':'device_item'}}" hover-class="device_item_hover">
+      bindtap="createBLEConnection" class="{{item.key?'device_item':'display_none'}}" hover-class="device_item_hover">
       <view style="font-size: 25px; color: #333; font-weight: 600;">{{item.name}}</view>
       <view style="font-size: 13px">信号强度: {{item.RSSI}}dBm ({{utils.max(0, item.RSSI + 100)}}%)</view>
       <view style="font-size: 13px">UUID: {{item.deviceId}}</view>
       <view style="font-size: 13px">Service数量: {{utils.len(item.advertisServiceUUIDs)}}</view>
   </view>
 </block>
- 
 </scroll-view>
+</block>
 
-<!-- <view class="connected_info" wx:if="{{connected}}">
-  <view>
-    <text>已连接到 {{name}}</text>
-    <view class="operation">
-    <button wx:if="{{canWrite}}" size="mini" bindtap="writeBLECharacteristicValue">写数据</button>
-    <button size="mini" bindtap="closeBLEConnection">断开连接</button>
+<block wx:if="{{!onlyTage}}">
+  <scroll-view class="page">
+<view class="cu-list menu" >
+  <view class="cu-item">
+    <view class="content" style="display:flex;justify-content:space-between;">
+      <text class="text-grey" style="font-size:40rpx;">已发现的蓝牙设备：</text>
+      <!-- <text decode="{{true}}" class="text-grey" style="font-size:40rpx;text-align:right">已发现 {{devices.length}} 个蓝牙设备：</text> -->
     </view>
-</view> -->
-  
-  <!-- <view style="font-size: 12px; margin-top: 10px;">
-    <view>蓝牙16进制数据: {{bluedata.strhexdata}}</view>
-    <view>蓝牙字符串数据: {{bluedata.strdata}}</view>
-    <view>所有数据: {{dataList}}</view>
   </view>
-</view> -->
+</view>
+</scroll-view>
+  <scroll-view class="device_list" scroll-y scroll-with-animation>
+  <block wx:for="{{devices}}" wx:key="index">
+    <view data-device-id="{{item.deviceId}}"
+        data-name="{{item.name || item.localName}}"
+        bindtap="createBLEConnection" class="device_item" hover-class="device_item_hover">
+        <view style="font-size: 25px; color: #333; font-weight: 600;">{{item.name}}</view>
+        <view style="font-size: 13px">信号强度: {{item.RSSI}}dBm ({{utils.max(0, item.RSSI + 100)}}%)</view>
+        <view style="font-size: 13px">UUID: {{item.deviceId}}</view>
+        <view style="font-size: 13px">Service数量: {{utils.len(item.advertisServiceUUIDs)}}</view>
+    </view>
+  </block>
+  </scroll-view>
+</block>

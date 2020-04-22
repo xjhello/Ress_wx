@@ -1,0 +1,53 @@
+<view class='first'>测试页面</view>
+
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="section section_gap">
+    <radio-group name="radio">
+    <label><radio checked="{{true}}" value="type-str"/>字符串</label>
+    <label><radio value="type-hex"/>16进制</label>  
+    </radio-group>
+  </view>
+  <view class="section">
+    <view class="section__title">输入字符串指令</view>
+    <input name="input" style="height: 3em; width: 100%;border:solid 1px #f00;" />
+  </view>
+
+  <view class="btn-area">
+      <view class="padding flex flex-direction">
+        <button form-type="submit" class="cu-btn bg-red lg" role="button"aria-disabled="false">发送</button>
+        <view style="padding:5rpx;"></view>
+        <button form-type="reset"  bindtap="clearInstructions" class="cu-btn bg-grey lg"role="button"aria-disabled="false">清除</button>
+      </view>
+    <!-- <button form-type="submit">发送</button>
+    <button form-type="reset" bindtap="clearInstructions">清除</button> -->
+  </view>
+</form>
+
+<view class="page-body">
+  <view class="page-section">
+    <view class="page-section-title">字符串内容:</view>
+    <view class="textarea-wrp">
+      <!-- <textarea auto-height value="{{text}}"/> -->
+      <view class='test'>{{text}}</view>  
+    </view>
+
+     <view class="page-section-title">16进制内容:</view>
+    <view class="textarea-wrp">
+      <!-- <textarea auto-height value="{{text}}"/> -->
+      <view class='test'>{{strHex}}</view> 
+    </view>
+
+    <!-- <view class="page-section-title">拼接内容:</view> -->
+    <!-- <view class="textarea-wrp">
+      <textarea style="border:solid 1px black;" auto-height  value="{{datastr}}"/>
+      <textarea></textarea>
+      <view class='test'>{{datastr}}</view> 
+    </view> -->
+
+</view>
+  <view class="page-section">
+    <view class="page-section-title">拼接内容:</view>
+      <view class="mytextarea">
+      <textarea auto-height="true" value="{{datastr}}"/>
+    </view></view>
+</view>

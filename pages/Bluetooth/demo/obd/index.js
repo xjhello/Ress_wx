@@ -13,11 +13,28 @@ Page({
     co2:0
   },
 
+    // 用户自定义显示选项[
+    switchChange:function(e){
+        console.log(e)
+        var index = Number(e.currentTarget.dataset.index) 
+        console.log(index)
+        var userDefined = this.data.userDefined
+        userDefined[index] = !userDefined[index]
+        wx.setStorageSync('userDefined', userDefined)
+        this.setData({
+          userDefined
+        })
+      },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // 读取缓存
+    var userDefined = wx.getStorageSync('userDefined')
+    this.setData({
+      userDefined
+    })
   },
 
   /**
